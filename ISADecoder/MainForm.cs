@@ -10,7 +10,8 @@ using System.Windows.Forms;
 
 namespace ISADecoder {
     public partial class MainForm : Form {
-        TextBox[] registers = new TextBox[16]; 
+        TextBox[] registers = new TextBox[16];
+        List<Instruction> instructions = new List<Instruction>();
         public MainForm() {
             InitializeComponent();
             // build register array
@@ -21,9 +22,6 @@ namespace ISADecoder {
                     rCount++;
                 } 
             }
-            
-            
-            
         }
 
         private void btnDecode_Click(object sender, EventArgs e) {
@@ -38,6 +36,8 @@ namespace ISADecoder {
                 }
 
                 CalculateStats(d.instructions);
+
+                instructions = d.instructions;
             }
             catch (Exception ex) {
                 tbInput.Text = ex.Message;
@@ -86,6 +86,12 @@ namespace ISADecoder {
             final += "\nImmediate: \t" + immediate;
 
             lblStats.Text = final;
+        }
+
+        private void lbOutput_SelectedIndexChanged(object sender, EventArgs e) {
+            Instruction i = instructions[lbOutput.SelectedIndex];
+            tbInstructionDescription.Text = $"Description of \'{i.ToString()}\': " + Environment.NewLine + Environment.NewLine;
+            tbInstructionDescription.Text += i.GetDescription();
         }
     }
 }

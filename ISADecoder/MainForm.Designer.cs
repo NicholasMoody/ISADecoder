@@ -59,6 +59,8 @@
             this.lbOutput = new System.Windows.Forms.ListBox();
             this.btnDecode = new System.Windows.Forms.Button();
             this.lblStats = new System.Windows.Forms.Label();
+            this.tbInstructionDescription = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tbR0
@@ -359,13 +361,14 @@
             // 
             // lbOutput
             // 
-            this.lbOutput.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbOutput.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbOutput.FormattingEnabled = true;
-            this.lbOutput.ItemHeight = 14;
+            this.lbOutput.ItemHeight = 16;
             this.lbOutput.Location = new System.Drawing.Point(549, 15);
             this.lbOutput.Name = "lbOutput";
-            this.lbOutput.Size = new System.Drawing.Size(239, 382);
+            this.lbOutput.Size = new System.Drawing.Size(239, 324);
             this.lbOutput.TabIndex = 33;
+            this.lbOutput.SelectedIndexChanged += new System.EventHandler(this.lbOutput_SelectedIndexChanged);
             // 
             // btnDecode
             // 
@@ -385,11 +388,31 @@
             this.lblStats.Size = new System.Drawing.Size(0, 13);
             this.lblStats.TabIndex = 35;
             // 
+            // tbInstructionDescription
+            // 
+            this.tbInstructionDescription.Location = new System.Drawing.Point(549, 367);
+            this.tbInstructionDescription.Multiline = true;
+            this.tbInstructionDescription.Name = "tbInstructionDescription";
+            this.tbInstructionDescription.Size = new System.Drawing.Size(239, 51);
+            this.tbInstructionDescription.TabIndex = 36;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(633, 350);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(71, 13);
+            this.label17.TabIndex = 37;
+            this.label17.Text = "Description";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 428);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.tbInstructionDescription);
             this.Controls.Add(this.lblStats);
             this.Controls.Add(this.btnDecode);
             this.Controls.Add(this.lbOutput);
@@ -471,6 +494,8 @@
         private System.Windows.Forms.ListBox lbOutput;
         private System.Windows.Forms.Button btnDecode;
         private System.Windows.Forms.Label lblStats;
+        private System.Windows.Forms.TextBox tbInstructionDescription;
+        private System.Windows.Forms.Label label17;
     }
 }
 
