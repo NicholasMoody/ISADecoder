@@ -390,6 +390,7 @@
             // 
             // tbInstructionDescription
             // 
+            this.tbInstructionDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbInstructionDescription.Location = new System.Drawing.Point(549, 367);
             this.tbInstructionDescription.Multiline = true;
             this.tbInstructionDescription.Name = "tbInstructionDescription";
@@ -450,6 +451,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbR0);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ISADecoder";
             this.ResumeLayout(false);
             this.PerformLayout();

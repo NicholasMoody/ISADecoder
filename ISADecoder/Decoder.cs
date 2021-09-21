@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -156,6 +157,27 @@ namespace ISADecoder {
                     default:
                         throw new Exception("Invalid instruction specifier");
                 }
+                // all instructions other than STOP require an operand
+                if (inst.mnemonic != Mnemonic.STOP) {
+                    if (loc + 3 >= bytes.Count)
+                        throw new Exception("Invalid instruction: cannot fetch operand");
+                    inst.instSize += 2;
+                    // fetch operand and shove into int 
+                    int operand = bytes[loc + 2];
+                    operand <<= 8;
+                    operand += bytes[loc + 3];
+                    inst.op1 = operand;
+                    loc += 2;
+                }
+
+                if (inst.addressingMode == AddressingMode.SecondRegister && inst.op1 > 0b1111) {
+                    string message = $"Invalid instruction for: {inst.ToString()}" + Environment.NewLine;
+                    message += $"Cannot access register 0x{inst.op1:X4} on 16 register ISA (addressing mode: second register).";
+                    throw new Exception(message);
+                }
+
+                if (inst.addressingMode == AddressingMode.Invalid)
+                    throw new Exception($"Invalid addressing mode for instruction {inst} (0x{msb:X2}{lsb:X2})");
                 instructions.Add(inst);
                 loc += 2;
             } while (!(msb == 0 && lsb == 0)); // loop until stop instruction (or we fail out for invalid input)

@@ -26,6 +26,7 @@ namespace ISADecoder {
 
         private void btnDecode_Click(object sender, EventArgs e) {
             lbOutput.Items.Clear();
+            tbInstructionDescription.Text = "";
             int pc = 0; 
             try {
                 Decoder d = new Decoder(tbInput.Text);
@@ -39,8 +40,13 @@ namespace ISADecoder {
 
                 instructions = d.instructions;
             }
+            catch (ArgumentOutOfRangeException) {
+                MessageBox.Show("Program must end with the STOP instruction (0x0000).", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex) {
-                tbInput.Text = ex.Message;
+                MessageBox.Show(ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
