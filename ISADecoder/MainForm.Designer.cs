@@ -359,10 +359,12 @@
             // 
             // lbOutput
             // 
+            this.lbOutput.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbOutput.FormattingEnabled = true;
+            this.lbOutput.ItemHeight = 14;
             this.lbOutput.Location = new System.Drawing.Point(549, 15);
             this.lbOutput.Name = "lbOutput";
-            this.lbOutput.Size = new System.Drawing.Size(239, 394);
+            this.lbOutput.Size = new System.Drawing.Size(239, 382);
             this.lbOutput.TabIndex = 33;
             // 
             // btnDecode

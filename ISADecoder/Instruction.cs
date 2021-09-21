@@ -13,6 +13,7 @@ namespace ISADecoder {
         public int r2 = -1;
         public int op1 = -1;
         public int op2 = -1;
+        public int instSize = -1; // instruction size in bytes (including operands). will be used for PC calculations 
 
         
         public override string ToString() {

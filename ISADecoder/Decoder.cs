@@ -34,6 +34,8 @@ namespace ISADecoder {
 
                 Instruction inst = new Instruction();
 
+                inst.instSize = 2; // every instruction will be at least 2 bytes, add more for operands
+
                 // identify instruction based on spec and populate instruction object accordingly
                 // comparisons done in binary for simplicity
                 switch (instSpec) {

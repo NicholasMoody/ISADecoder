@@ -28,11 +28,13 @@ namespace ISADecoder {
 
         private void btnDecode_Click(object sender, EventArgs e) {
             lbOutput.Items.Clear();
+            int pc = 0; 
             try {
                 Decoder d = new Decoder(tbInput.Text);
 
                 foreach (Instruction i in d.instructions) {
-                    lbOutput.Items.Add(i.ToString());
+                    lbOutput.Items.Add("0x" + pc.ToString("X4") + " | " + i.ToString());
+                    pc += i.instSize;
                 }
 
                 CalculateStats(d.instructions);
