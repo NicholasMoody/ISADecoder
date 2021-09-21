@@ -90,8 +90,7 @@ namespace ISADecoder {
 
         private void lbOutput_SelectedIndexChanged(object sender, EventArgs e) {
             Instruction i = instructions[lbOutput.SelectedIndex];
-            tbInstructionDescription.Text = $"Description of \'{i.ToString()}\': " + Environment.NewLine + Environment.NewLine;
-            tbInstructionDescription.Text += i.GetDescription();
+            tbInstructionDescription.Text = i.GetDescription();
         }
     }
 }

@@ -29,16 +29,16 @@ namespace ISADecoder {
 
             switch (mnemonic) {
                 case Mnemonic.LD:
-                    s = $"Load value from memory address to r{r1}";
+                    s = $"Load value from memory address to R{r1}";
                     break;
                 case Mnemonic.ST:
-                    s = $"Store value from r{r1} to memory address";
+                    s = $"Store value from R{r1} to memory address";
                     break;
                 case Mnemonic.MOV:
-                    s = $"Move operand to r{r1}";
+                    s = $"Move operand to R{r1}";
                     break;
                 case Mnemonic.COM:
-                    s = $"Compare value in r{r1} to operand";
+                    s = $"Compare value in R{r1} to operand";
                     break;
                 case Mnemonic.B:
                     s = $"Branch unconditionally to operand";
@@ -65,25 +65,25 @@ namespace ISADecoder {
                     s = $"End program";
                     break;
                 case Mnemonic.ADD:
-                    s = $"Add value in r{r1} to operand";
+                    s = $"Add value in R{r1} to operand";
                     break;
                 case Mnemonic.SUB:
-                    s = $"Subtract value in operand from r{r1}";
+                    s = $"Subtract value in operand from R{r1}";
                     break;
                 case Mnemonic.ASL:
-                    s = $"Arithmetic shift left of value in r{r1} by operand bits";
+                    s = $"Arithmetic shift left of value in R{r1} by operand bits";
                     break;
                 case Mnemonic.LSR:
-                    s = $"Logical shift right of value in r{r1} by operand bits";
+                    s = $"Logical shift right of value in R{r1} by operand bits";
                     break;
                 case Mnemonic.ASR:
-                    s = $"Arithmetic shift right of value in r{r1} by operand bits";
+                    s = $"Arithmetic shift right of value in R{r1} by operand bits";
                     break;
                 case Mnemonic.LSL:
-                    s = $"Logical shift left of value in r{r1} by operand bits";
+                    s = $"Logical shift left of value in R{r1} by operand bits";
                     break;
                 case Mnemonic.MULT:
-                    s = $"Multiply register r{r1} by operand";
+                    s = $"Multiply register R{r1} by operand";
                     break;
             }
             return s;
