@@ -187,7 +187,7 @@ namespace ISADecoder {
             input = input.Replace(" ", "");
             // parse to binary array 
             for (int i = 0; i < input.Length; i += 2) {
-                if (CharToHex(input[i]) == -1 || CharToHex(input[i]) == -1)
+                if (CharToHex(input[i]) == -1 || CharToHex(input[i + 1]) == -1)
                     throw new Exception("Invalid input character/s, please try again.");
                 byte val = (byte)CharToHex(input[i]); // get hex value of first char of byte
                 val <<= 4; // shift bits to left of byte

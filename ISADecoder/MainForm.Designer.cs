@@ -61,12 +61,18 @@
             this.lblStats = new System.Windows.Forms.Label();
             this.tbInstructionDescription = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.btnStep = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tbR0
             // 
             this.tbR0.Location = new System.Drawing.Point(34, 12);
             this.tbR0.Name = "tbR0";
+            this.tbR0.ReadOnly = true;
             this.tbR0.Size = new System.Drawing.Size(57, 20);
             this.tbR0.TabIndex = 0;
             this.tbR0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -95,6 +101,7 @@
             // 
             this.tbR1.Location = new System.Drawing.Point(34, 38);
             this.tbR1.Name = "tbR1";
+            this.tbR1.ReadOnly = true;
             this.tbR1.Size = new System.Drawing.Size(57, 20);
             this.tbR1.TabIndex = 2;
             this.tbR1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -113,6 +120,7 @@
             // 
             this.tbR2.Location = new System.Drawing.Point(34, 64);
             this.tbR2.Name = "tbR2";
+            this.tbR2.ReadOnly = true;
             this.tbR2.Size = new System.Drawing.Size(57, 20);
             this.tbR2.TabIndex = 4;
             this.tbR2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -131,6 +139,7 @@
             // 
             this.tbR3.Location = new System.Drawing.Point(34, 90);
             this.tbR3.Name = "tbR3";
+            this.tbR3.ReadOnly = true;
             this.tbR3.Size = new System.Drawing.Size(57, 20);
             this.tbR3.TabIndex = 6;
             this.tbR3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -149,6 +158,7 @@
             // 
             this.tbR4.Location = new System.Drawing.Point(34, 116);
             this.tbR4.Name = "tbR4";
+            this.tbR4.ReadOnly = true;
             this.tbR4.Size = new System.Drawing.Size(57, 20);
             this.tbR4.TabIndex = 8;
             this.tbR4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -167,6 +177,7 @@
             // 
             this.tbR5.Location = new System.Drawing.Point(34, 142);
             this.tbR5.Name = "tbR5";
+            this.tbR5.ReadOnly = true;
             this.tbR5.Size = new System.Drawing.Size(57, 20);
             this.tbR5.TabIndex = 10;
             this.tbR5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -185,6 +196,7 @@
             // 
             this.tbR6.Location = new System.Drawing.Point(34, 168);
             this.tbR6.Name = "tbR6";
+            this.tbR6.ReadOnly = true;
             this.tbR6.Size = new System.Drawing.Size(57, 20);
             this.tbR6.TabIndex = 12;
             this.tbR6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -203,6 +215,7 @@
             // 
             this.tbR7.Location = new System.Drawing.Point(34, 194);
             this.tbR7.Name = "tbR7";
+            this.tbR7.ReadOnly = true;
             this.tbR7.Size = new System.Drawing.Size(57, 20);
             this.tbR7.TabIndex = 14;
             this.tbR7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -221,6 +234,7 @@
             // 
             this.tbR8.Location = new System.Drawing.Point(34, 220);
             this.tbR8.Name = "tbR8";
+            this.tbR8.ReadOnly = true;
             this.tbR8.Size = new System.Drawing.Size(57, 20);
             this.tbR8.TabIndex = 16;
             this.tbR8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -239,6 +253,7 @@
             // 
             this.tbR9.Location = new System.Drawing.Point(34, 246);
             this.tbR9.Name = "tbR9";
+            this.tbR9.ReadOnly = true;
             this.tbR9.Size = new System.Drawing.Size(57, 20);
             this.tbR9.TabIndex = 18;
             this.tbR9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -257,6 +272,7 @@
             // 
             this.tbR10.Location = new System.Drawing.Point(34, 272);
             this.tbR10.Name = "tbR10";
+            this.tbR10.ReadOnly = true;
             this.tbR10.Size = new System.Drawing.Size(57, 20);
             this.tbR10.TabIndex = 20;
             this.tbR10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -275,6 +291,7 @@
             // 
             this.tbR11.Location = new System.Drawing.Point(34, 298);
             this.tbR11.Name = "tbR11";
+            this.tbR11.ReadOnly = true;
             this.tbR11.Size = new System.Drawing.Size(57, 20);
             this.tbR11.TabIndex = 22;
             this.tbR11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -293,6 +310,7 @@
             // 
             this.tbR12.Location = new System.Drawing.Point(34, 324);
             this.tbR12.Name = "tbR12";
+            this.tbR12.ReadOnly = true;
             this.tbR12.Size = new System.Drawing.Size(57, 20);
             this.tbR12.TabIndex = 24;
             this.tbR12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -311,6 +329,7 @@
             // 
             this.tbR13.Location = new System.Drawing.Point(34, 350);
             this.tbR13.Name = "tbR13";
+            this.tbR13.ReadOnly = true;
             this.tbR13.Size = new System.Drawing.Size(57, 20);
             this.tbR13.TabIndex = 26;
             this.tbR13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -329,6 +348,7 @@
             // 
             this.tbR14.Location = new System.Drawing.Point(34, 376);
             this.tbR14.Name = "tbR14";
+            this.tbR14.ReadOnly = true;
             this.tbR14.Size = new System.Drawing.Size(57, 20);
             this.tbR14.TabIndex = 28;
             this.tbR14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -347,13 +367,14 @@
             // 
             this.tbR15.Location = new System.Drawing.Point(34, 402);
             this.tbR15.Name = "tbR15";
+            this.tbR15.ReadOnly = true;
             this.tbR15.Size = new System.Drawing.Size(57, 20);
             this.tbR15.TabIndex = 30;
             this.tbR15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tbInput
             // 
-            this.tbInput.Location = new System.Drawing.Point(213, 15);
+            this.tbInput.Location = new System.Drawing.Point(229, 31);
             this.tbInput.Multiline = true;
             this.tbInput.Name = "tbInput";
             this.tbInput.Size = new System.Drawing.Size(314, 150);
@@ -364,15 +385,15 @@
             this.lbOutput.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbOutput.FormattingEnabled = true;
             this.lbOutput.ItemHeight = 16;
-            this.lbOutput.Location = new System.Drawing.Point(549, 15);
+            this.lbOutput.Location = new System.Drawing.Point(549, 31);
             this.lbOutput.Name = "lbOutput";
-            this.lbOutput.Size = new System.Drawing.Size(239, 324);
+            this.lbOutput.Size = new System.Drawing.Size(239, 308);
             this.lbOutput.TabIndex = 33;
             this.lbOutput.SelectedIndexChanged += new System.EventHandler(this.lbOutput_SelectedIndexChanged);
             // 
             // btnDecode
             // 
-            this.btnDecode.Location = new System.Drawing.Point(213, 171);
+            this.btnDecode.Location = new System.Drawing.Point(229, 187);
             this.btnDecode.Name = "btnDecode";
             this.btnDecode.Size = new System.Drawing.Size(314, 39);
             this.btnDecode.TabIndex = 34;
@@ -407,11 +428,67 @@
             this.label17.TabIndex = 37;
             this.label17.Text = "Description";
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(559, 15);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(23, 13);
+            this.label19.TabIndex = 39;
+            this.label19.Text = "PC";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(620, 15);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(67, 13);
+            this.label20.TabIndex = 40;
+            this.label20.Text = "Instruction";
+            // 
+            // btnRun
+            // 
+            this.btnRun.Location = new System.Drawing.Point(229, 232);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(157, 41);
+            this.btnRun.TabIndex = 41;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            // 
+            // btnStep
+            // 
+            this.btnStep.Enabled = false;
+            this.btnStep.Location = new System.Drawing.Point(386, 232);
+            this.btnStep.Name = "btnStep";
+            this.btnStep.Size = new System.Drawing.Size(157, 41);
+            this.btnStep.TabIndex = 42;
+            this.btnStep.Text = "Step";
+            this.btnStep.UseVisualStyleBackColor = true;
+            this.btnStep.Click += new System.EventHandler(this.btnStep_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(365, 15);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(47, 13);
+            this.label18.TabIndex = 43;
+            this.label18.Text = "Source";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 428);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.btnStep);
+            this.Controls.Add(this.btnRun);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label19);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.tbInstructionDescription);
             this.Controls.Add(this.lblStats);
@@ -498,6 +575,11 @@
         private System.Windows.Forms.Label lblStats;
         private System.Windows.Forms.TextBox tbInstructionDescription;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.Button btnStep;
+        private System.Windows.Forms.Label label18;
     }
 }
 
