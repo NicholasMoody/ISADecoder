@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ISADecoder {
     class Decoder {
@@ -185,6 +186,8 @@ namespace ISADecoder {
 
         private void ParseToBinary(string input, List<byte> output) {
             input = input.Replace(" ", "");
+            input = input.Replace("\n\n", "");
+            input = input.Replace(Environment.NewLine, "");
             // parse to binary array 
             for (int i = 0; i < input.Length; i += 2) {
                 if (CharToHex(input[i]) == -1 || CharToHex(input[i + 1]) == -1)

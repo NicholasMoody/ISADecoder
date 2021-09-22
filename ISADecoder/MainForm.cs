@@ -13,6 +13,8 @@ namespace ISADecoder {
         TextBox[] registers = new TextBox[16];
         List<Instruction> instructions = new List<Instruction>();
         int[] memory = new int[1048576]; // stores memory of program for simulation 
+        int branchAddress = -1; // address to branch to, -1 if none 
+        bool done = false;
 
         public MainForm() {
             InitializeComponent();
@@ -115,7 +117,9 @@ namespace ISADecoder {
         /// </summary>
         /// <param name="address">PC address of instruction</param>
         private void Step(int address) {
-            Instruction inst = new Instruction(); 
+            Instruction inst = new Instruction();
+
+            ResetMemoryTouchedTB();
 
             foreach (Instruction i in instructions) {
                 if (address == i.address) {
@@ -124,73 +128,166 @@ namespace ISADecoder {
                 }
             }
 
+            int registerValue = 0;
+            if (inst.r1 >= 0) 
+                registerValue = Convert.ToInt32(registers[inst.r1].Text, 16); // value stored in current instruction's register
+            int operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
-                    registers[inst.r1].Text = "0x" + memory[inst.op1].ToString("X4"); // load value in memory address to register
+                    tbMemTouched.Text = ToHexString(inst.op1);
+                    tbPrevValue.Text = ToHexString(memory[inst.op1]);
+                    registers[inst.r1].Text = ToHexString(memory[inst.op1]); // load value in memory address to register
+                    tbNewValue.Text = ToHexString(memory[inst.op1]);
                     break;
                 case Mnemonic.ST:
-                    memory[inst.op1] = Convert.ToInt32(registers[inst.r1].Text, 16); // store value from register in memory address 
+                    tbMemTouched.Text = ToHexString(inst.op1);
+                    tbPrevValue.Text = ToHexString(memory[inst.op1]);
+                    memory[inst.op1] = registerValue; // store value from register in memory address 
+                    tbNewValue.Text = ToHexString(memory[inst.op1]);
                     break;
                 case Mnemonic.MOV:
                     // moves operand into register depending on addressing mode 
-                    if (inst.addressingMode == AddressingMode.Immediate) {
-                        registers[inst.r1].Text = "0x" + inst.op1.ToString("X4");
-                    }
-                    else if (inst.addressingMode == AddressingMode.MemLoc) {
-                        registers[inst.r1].Text = "0x" + memory[inst.op1].ToString("X4");
-                    }
-                    else if (inst.addressingMode == AddressingMode.SecondRegister) {
-                        registers[inst.r1].Text = registers[inst.op1].Text;
-                    }
+                    registers[inst.r1].Text = ToHexString(operandVal);
                     break;
                 case Mnemonic.COM:
+                    // subtracts operand value from register value and sets flags
+                    int comp = HexToInt(registers[inst.r1].Text) - operandVal;
+                    int flag = 0;
+                    if (comp == 0) {  
+                        flag |= 0b100; // sets zero flag
+                        flag &= 0b0111; // unsets negative flag
+                    }
+                    if (comp < 0) {
+                        flag |= 0b1000; // sets negative flag
+                        flag &= 0b1011; // unset zero flag
+                    }
+                    registers[15].Text = ToHexString(flag);
                     break;
                 case Mnemonic.B:
+                    branchAddress = inst.op1;
                     break;
                 case Mnemonic.BL:
+                    if (NFlagSet())
+                        branchAddress = inst.op1;
                     break;
                 case Mnemonic.BLE:
+                    if (ZFlagSet() || NFlagSet())
+                        branchAddress = inst.op1;
                     break;
                 case Mnemonic.BG:
+                    if (!NFlagSet())
+                        branchAddress = inst.op1;
                     break;
                 case Mnemonic.BGE:
+                    if (ZFlagSet() || !NFlagSet())
+                        branchAddress = inst.op1;
                     break;
                 case Mnemonic.BE:
+                    if (ZFlagSet())
+                        branchAddress = inst.op1;
                     break;
                 case Mnemonic.BNE:
+                    if (!ZFlagSet())
+                        branchAddress = inst.op1;
                     break;
                 case Mnemonic.STOP:
+                    done = true;
                     break;
                 case Mnemonic.ADD:
+                    registers[inst.r1].Text = ToHexString(registerValue + operandVal);
                     break;
                 case Mnemonic.SUB:
+                    registers[inst.r1].Text = ToHexString(registerValue - operandVal);
                     break;
+                // NOTE: all arithmetic and logical shifts do the same thing here
+                // either change how ints are handled or remove one type of shift (easier)
                 case Mnemonic.ASL:
+                    registers[inst.r1].Text = ToHexString(registerValue << operandVal);
                     break;
                 case Mnemonic.LSR:
+                    registers[inst.r1].Text = ToHexString(registerValue >> operandVal);
                     break;
                 case Mnemonic.ASR:
+                    registers[inst.r1].Text = ToHexString(registerValue >> operandVal);
                     break;
                 case Mnemonic.LSL:
+                    registers[inst.r1].Text = ToHexString(registerValue << operandVal);
                     break;
                 case Mnemonic.MULT:
+                    registers[inst.r1].Text = ToHexString(operandVal * registerValue);
                     break;
             }
+        }
+
+        private int GetOperandValByAddressingMode(Instruction inst) {
+            int val = 0;
+            if (inst.addressingMode == AddressingMode.Immediate)
+                val = inst.op1;
+            else if (inst.addressingMode == AddressingMode.MemLoc)
+                val = memory[inst.op1];
+            else if (inst.addressingMode == AddressingMode.SecondRegister)
+                val = Convert.ToInt32(registers[inst.op1].Text, 16);
+            return val;
+        }
+
+        private string ToHexString(int val) {
+            return "0x" + val.ToString("X4");
+        }
+
+        private bool NFlagSet() {
+            int flag = HexToInt(registers[15].Text) >> 3;
+            return flag % 2 == 1;
+        }
+
+        private bool ZFlagSet() {
+            int flag = HexToInt(registers[15].Text) >> 2;
+            return flag % 2 == 1;
+        }
+
+        private int HexToInt(string hex) {
+            return Convert.ToInt32(hex, 16);
         }
 
         private void btnRun_Click(object sender, EventArgs e) {
             lbOutput.SelectedIndex = 0;
             lbOutput.Enabled = false;
             btnStep.Enabled = true;
+            btnRun.Enabled = false;
             Step(0);
             btnDecode.Enabled = false;
         }
 
         private void btnStep_Click(object sender, EventArgs e) {
-            if (lbOutput.SelectedIndex < lbOutput.Items.Count - 1) {
-                lbOutput.SelectedIndex++;
-                Step(instructions[lbOutput.SelectedIndex].address);
+            if (done) {
+                lbOutput.SelectedIndex = 0;
+                lbOutput.Enabled = true;
+                btnStep.Enabled = false;
+                btnRun.Enabled = true;
+                btnDecode.Enabled = true;
             }
+            if (lbOutput.SelectedIndex < lbOutput.Items.Count - 1) {
+                if (branchAddress == -1) {
+                    lbOutput.SelectedIndex++;
+                    Step(instructions[lbOutput.SelectedIndex].address);
+                }
+                else { // if previous instruction was a branch 
+                    // find index of next instruction 
+                    for (int i = 0; i < instructions.Count; i++) {
+                        if (instructions[i].address == branchAddress) {
+                            lbOutput.SelectedIndex = i;
+                            break;
+                        }
+                    }
+                    Step(branchAddress);
+                    branchAddress = -1;
+                }
+            }
+        }
+
+        private void ResetMemoryTouchedTB() {
+            tbMemTouched.Text = "n/a";
+            tbPrevValue.Text = "n/a";
+            tbNewValue.Text = "n/a";
         }
     }
 }

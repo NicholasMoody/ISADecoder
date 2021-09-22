@@ -66,6 +66,12 @@
             this.btnRun = new System.Windows.Forms.Button();
             this.btnStep = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
+            this.tbMemTouched = new System.Windows.Forms.TextBox();
+            this.tbPrevValue = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.tbNewValue = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tbR0
@@ -479,11 +485,68 @@
             this.label18.TabIndex = 43;
             this.label18.Text = "Source";
             // 
+            // tbMemTouched
+            // 
+            this.tbMemTouched.Location = new System.Drawing.Point(229, 309);
+            this.tbMemTouched.Name = "tbMemTouched";
+            this.tbMemTouched.Size = new System.Drawing.Size(85, 20);
+            this.tbMemTouched.TabIndex = 44;
+            // 
+            // tbPrevValue
+            // 
+            this.tbPrevValue.Location = new System.Drawing.Point(229, 343);
+            this.tbPrevValue.Name = "tbPrevValue";
+            this.tbPrevValue.Size = new System.Drawing.Size(85, 20);
+            this.tbPrevValue.TabIndex = 45;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(111, 312);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(112, 13);
+            this.label21.TabIndex = 46;
+            this.label21.Text = "Memory Touched: ";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(123, 346);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(100, 13);
+            this.label22.TabIndex = 47;
+            this.label22.Text = "Previous Value: ";
+            // 
+            // tbNewValue
+            // 
+            this.tbNewValue.Location = new System.Drawing.Point(229, 372);
+            this.tbNewValue.Name = "tbNewValue";
+            this.tbNewValue.Size = new System.Drawing.Size(85, 20);
+            this.tbNewValue.TabIndex = 48;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(147, 375);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(76, 13);
+            this.label23.TabIndex = 49;
+            this.label23.Text = "New Value: ";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 428);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this.tbNewValue);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.tbPrevValue);
+            this.Controls.Add(this.tbMemTouched);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.btnStep);
             this.Controls.Add(this.btnRun);
@@ -580,6 +643,12 @@
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Button btnStep;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox tbMemTouched;
+        private System.Windows.Forms.TextBox tbPrevValue;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox tbNewValue;
+        private System.Windows.Forms.Label label23;
     }
 }
 
