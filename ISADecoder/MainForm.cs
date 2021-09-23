@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ISADecoder {
@@ -118,8 +113,6 @@ namespace ISADecoder {
         private void Step() {
             Instruction inst = new Instruction();
 
-            ResetMemoryTouchedTB();
-
             foreach (Instruction i in instructions) {
                 if (PCAddr == i.address) {
                     inst = i;
@@ -134,22 +127,17 @@ namespace ISADecoder {
             short registerValue = 0;
             if (inst.r1 >= 0) 
                 registerValue = Convert.ToInt16(registers[inst.r1].Text, 16); // value stored in current instruction's register
-            int operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
+            short operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
-                    tbMemTouched.Text = ToHexString(inst.op1);
-                    tbPrevValue.Text = ToHexString(memory[inst.op1]);
                     registers[inst.r1].Text = ToHexString(memory[inst.op1]); // load value in memory address to register
-                    tbNewValue.Text = ToHexString(memory[inst.op1]);
+                    ViewMemoryAt(inst.op1);
                     break;
                 case Mnemonic.ST:
-                    tbMemTouched.Text = ToHexString(inst.op1);
-                    tbPrevValue.Text = ToHexFromMemory(inst.op1);
 
                     memory[inst.op1] = (byte)(registerValue >> 8); // most significant byte of value
                     memory[inst.op1 + 1] = (byte)(registerValue & 0b11111111); // least significant byte of value
-
-                    tbNewValue.Text = ToHexFromMemory(inst.op1);
+                    ViewMemoryAt(inst.op1);
                     break;
                 case Mnemonic.MOV:
                     // moves operand into register depending on addressing mode 
@@ -158,7 +146,7 @@ namespace ISADecoder {
                 case Mnemonic.COM:
                     // subtracts operand value from register value and sets flags
                     int comp = HexToInt(registers[inst.r1].Text) - operandVal;
-                    int flag = 0;
+                    short flag = 0;
                     if (comp == 0) {  
                         flag |= 0b100; // sets zero flag
                         flag &= 0b0111; // unsets negative flag
@@ -200,47 +188,65 @@ namespace ISADecoder {
                     done = true;
                     break;
                 case Mnemonic.ADD:
-                    registers[inst.r1].Text = ToHexString(registerValue + operandVal);
+                    registers[inst.r1].Text = ToHexString((short)(registerValue + operandVal));
                     break;
                 case Mnemonic.SUB:
-                    registers[inst.r1].Text = ToHexString(registerValue - operandVal);
+                    registers[inst.r1].Text = ToHexString((short)(registerValue - operandVal));
                     break;
                 // NOTE: all arithmetic and logical shifts do the same thing here
                 // either change how ints are handled or remove one type of shift (easier)
                 case Mnemonic.ASL:
-                    registers[inst.r1].Text = ToHexString(registerValue << operandVal);
+                    registers[inst.r1].Text = ToHexString((short)(registerValue << operandVal));
                     break;
                 case Mnemonic.LSR:
-                    registers[inst.r1].Text = ToHexString(registerValue >> operandVal);
+                    registers[inst.r1].Text = ToHexString((short)(registerValue >> operandVal));
                     break;
                 case Mnemonic.ASR:
-                    registers[inst.r1].Text = ToHexString(registerValue >> operandVal);
+                    registers[inst.r1].Text = ToHexString((short)(registerValue >> operandVal));
                     break;
                 case Mnemonic.LSL:
-                    registers[inst.r1].Text = ToHexString(registerValue << operandVal);
+                    registers[inst.r1].Text = ToHexString((short)(registerValue << operandVal));
                     break;
                 case Mnemonic.MULT:
-                    registers[inst.r1].Text = ToHexString(operandVal * registerValue);
+                    registers[inst.r1].Text = ToHexString((short)(operandVal * registerValue));
                     break;
             }
         }
 
-        private int GetOperandValByAddressingMode(Instruction inst) {
-            int val = 0;
+        // fill textbox with memory at address including its 10 neighbors (words, not bytes) 
+        // ADDRESS SHOULD BE EVEN, OTHERWISE WEIRD SHIT WILL HAPPEN
+        // I AM WARNING YOU 
+        private void ViewMemoryAt(short address) {
+            tbMemViewer.Text = "";
+            for (short i = -12; i <= 12; i += 2) {
+                if (address + i >= 0 && address + i < memory.Length) {
+                    tbMemViewer.Text += ToHexString((short)(address + i)) + " | " + ToHexFromMemory(address + i) + Environment.NewLine;
+                }
+            }
+        }
+
+        private short GetOperandValByAddressingMode(Instruction inst) {
+            short val = 0;
             if (inst.addressingMode == AddressingMode.Immediate)
                 val = inst.op1;
             else if (inst.addressingMode == AddressingMode.MemLoc)
                 val = memory[inst.op1];
             else if (inst.addressingMode == AddressingMode.SecondRegister)
-                val = Convert.ToInt32(registers[inst.op1].Text, 16);
+                val = Convert.ToInt16(registers[inst.op1].Text, 16);
             return val;
         }
 
-        private string ToHexString(int val) {
+        private string ToHexString(short val) {
             return "0x" + val.ToString("X4");
         }
 
         private string ToHexFromMemory(int address) {
+            if (address < 0 || address >= memory.Length)
+                return "n/a";
+            // last byte, can't form word 
+            if (address == memory.Length - 1) 
+                return $"0x{memory[address]:X2}";
+
             return $"0x{memory[address]:X2}{memory[address + 1]:X2}";
         }
 
@@ -254,7 +260,7 @@ namespace ISADecoder {
             return flag % 2 == 1;
         }
 
-        private int HexToInt(string hex) {
+        private short HexToInt(string hex) {
             return Convert.ToInt16(hex, 16);
         }
 
@@ -289,10 +295,15 @@ namespace ISADecoder {
             }
         }
 
-        private void ResetMemoryTouchedTB() {
-            tbMemTouched.Text = "n/a";
-            tbPrevValue.Text = "n/a";
-            tbNewValue.Text = "n/a";
+        private void btnViewMem_Click(object sender, EventArgs e) {
+            try {
+                short address = HexToInt(tbMemSelection.Text);
+                ViewMemoryAt(address);
+            }
+            catch (Exception) {
+                MessageBox.Show("Invalid memory address. Input should be four hex characters.", "Invalid Input", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

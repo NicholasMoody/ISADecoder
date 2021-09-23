@@ -66,12 +66,11 @@
             this.btnRun = new System.Windows.Forms.Button();
             this.btnStep = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
-            this.tbMemTouched = new System.Windows.Forms.TextBox();
-            this.tbPrevValue = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.tbNewValue = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
+            this.tbMemViewer = new System.Windows.Forms.TextBox();
+            this.tbMemSelection = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.btnViewMem = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbR0
@@ -485,71 +484,63 @@
             this.label18.TabIndex = 43;
             this.label18.Text = "Source";
             // 
-            // tbMemTouched
+            // tbMemViewer
             // 
-            this.tbMemTouched.Location = new System.Drawing.Point(229, 309);
-            this.tbMemTouched.Name = "tbMemTouched";
-            this.tbMemTouched.ReadOnly = true;
-            this.tbMemTouched.Size = new System.Drawing.Size(85, 20);
-            this.tbMemTouched.TabIndex = 44;
+            this.tbMemViewer.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbMemViewer.Location = new System.Drawing.Point(97, 220);
+            this.tbMemViewer.Multiline = true;
+            this.tbMemViewer.Name = "tbMemViewer";
+            this.tbMemViewer.ReadOnly = true;
+            this.tbMemViewer.Size = new System.Drawing.Size(126, 202);
+            this.tbMemViewer.TabIndex = 50;
             // 
-            // tbPrevValue
+            // tbMemSelection
             // 
-            this.tbPrevValue.Location = new System.Drawing.Point(229, 343);
-            this.tbPrevValue.Name = "tbPrevValue";
-            this.tbPrevValue.ReadOnly = true;
-            this.tbPrevValue.Size = new System.Drawing.Size(85, 20);
-            this.tbPrevValue.TabIndex = 45;
+            this.tbMemSelection.Location = new System.Drawing.Point(246, 294);
+            this.tbMemSelection.Name = "tbMemSelection";
+            this.tbMemSelection.Size = new System.Drawing.Size(51, 20);
+            this.tbMemSelection.TabIndex = 51;
             // 
-            // label21
+            // label24
             // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(111, 312);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(112, 13);
-            this.label21.TabIndex = 46;
-            this.label21.Text = "Memory Touched: ";
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(226, 279);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(100, 13);
+            this.label24.TabIndex = 52;
+            this.label24.Text = "View Memory at:";
             // 
-            // label22
+            // label25
             // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(123, 346);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(100, 13);
-            this.label22.TabIndex = 47;
-            this.label22.Text = "Previous Value: ";
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(226, 297);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(20, 13);
+            this.label25.TabIndex = 53;
+            this.label25.Text = "0x";
             // 
-            // tbNewValue
+            // btnViewMem
             // 
-            this.tbNewValue.Location = new System.Drawing.Point(229, 372);
-            this.tbNewValue.Name = "tbNewValue";
-            this.tbNewValue.ReadOnly = true;
-            this.tbNewValue.Size = new System.Drawing.Size(85, 20);
-            this.tbNewValue.TabIndex = 48;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(147, 375);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(76, 13);
-            this.label23.TabIndex = 49;
-            this.label23.Text = "New Value: ";
+            this.btnViewMem.Location = new System.Drawing.Point(246, 316);
+            this.btnViewMem.Name = "btnViewMem";
+            this.btnViewMem.Size = new System.Drawing.Size(51, 23);
+            this.btnViewMem.TabIndex = 54;
+            this.btnViewMem.Text = "View";
+            this.btnViewMem.UseVisualStyleBackColor = true;
+            this.btnViewMem.Click += new System.EventHandler(this.btnViewMem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 428);
-            this.Controls.Add(this.label23);
-            this.Controls.Add(this.tbNewValue);
-            this.Controls.Add(this.label22);
-            this.Controls.Add(this.label21);
-            this.Controls.Add(this.tbPrevValue);
-            this.Controls.Add(this.tbMemTouched);
+            this.Controls.Add(this.btnViewMem);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.label24);
+            this.Controls.Add(this.tbMemSelection);
+            this.Controls.Add(this.tbMemViewer);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.btnStep);
             this.Controls.Add(this.btnRun);
@@ -646,12 +637,11 @@
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Button btnStep;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox tbMemTouched;
-        private System.Windows.Forms.TextBox tbPrevValue;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox tbNewValue;
-        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox tbMemViewer;
+        private System.Windows.Forms.TextBox tbMemSelection;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button btnViewMem;
     }
 }
 
