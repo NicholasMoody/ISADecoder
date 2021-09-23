@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,12 +11,13 @@ namespace ISADecoder {
         public Type type;
         public Mnemonic mnemonic;
         public AddressingMode addressingMode = AddressingMode.None;
-        public int r1 = -1;
-        public int r2 = -1;
-        public int op1 = -1;
-        public int op2 = -1;
-        public int instSize = -1; // instruction size in bytes (including operands). will be used for PC calculations 
-        public int address = -1;
+        
+        public short r1 = -1;
+        public short r2 = -1;
+        public short op1 = -1;
+        public short op2 = -1;
+        public short instSize = -1; // instruction size in bytes (including operands). will be used for PC calculations 
+        public short address = -1;
 
         
         public override string ToString() {
@@ -23,9 +26,28 @@ namespace ISADecoder {
                 output += $" R{r1}"; 
             }
             if (op1 != -1) {
-                output += $", 0x{op1:X4}";
+                if (addressingMode == AddressingMode.Immediate)
+                    output += $", {op1}";
+                else if (addressingMode == AddressingMode.MemLoc)
+                    output += $", 0x{op1:X4}";
+                else if (addressingMode == AddressingMode.SecondRegister)
+                    output += $", R{op1}";
+                else if (addressingMode == AddressingMode.None)
+                    output += $", 0x{op1:X4}";
             }
             return output;
+        }
+
+        private string GetOperandFormatting() {
+            switch (addressingMode) {
+                case AddressingMode.SecondRegister:
+                    return $"value in R{op1}";
+                case AddressingMode.MemLoc:
+                    return $"value in 0x{op1:X4}";
+                case AddressingMode.Immediate:
+                    return $"{op1}";
+            }
+            return "";
         }
 
         public string GetDescription() {
@@ -39,10 +61,10 @@ namespace ISADecoder {
                     s = $"Store value from R{r1} to 0x{op1:X4}";
                     break;
                 case Mnemonic.MOV:
-                    s = $"Move 0x{op1:X4} to R{r1}";
+                    s = $"Move {GetOperandFormatting()} to R{r1}";
                     break;
                 case Mnemonic.COM:
-                    s = $"Compare value in R{r1} to 0x{op1:X4}";
+                    s = $"Compare value in R{r1} to {GetOperandFormatting()}";
                     break;
                 case Mnemonic.B:
                     s = $"Branch unconditionally to 0x{op1:X4}";
@@ -69,36 +91,26 @@ namespace ISADecoder {
                     s = $"End program";
                     break;
                 case Mnemonic.ADD:
-                    s = $"Add value in R{r1} to 0x{op1:X4}";
+                    s = $"Add {GetOperandFormatting()} to R{r1}";
                     break;
                 case Mnemonic.SUB:
-                    s = $"Subtract value in 0x{op1:X4} from R{r1}";
+                    s = $"Subtract {GetOperandFormatting()} from R{r1}";
                     break;
                 case Mnemonic.ASL:
-                    s = $"Arithmetic shift left of value in R{r1} by 0x{op1:X4} bits";
+                    s = $"Arithmetic shift left of R{r1} by {GetOperandFormatting()} bits";
                     break;
                 case Mnemonic.LSR:
-                    s = $"Logical shift right of value in R{r1} by 0x{op1:X4} bits";
+                    s = $"Logical shift right of R{r1} by {GetOperandFormatting()} bits";
                     break;
                 case Mnemonic.ASR:
-                    s = $"Arithmetic shift right of value in R{r1} by 0x{op1:X4} bits";
+                    s = $"Arithmetic shift right of R{r1} by {GetOperandFormatting()} bits";
                     break;
                 case Mnemonic.LSL:
-                    s = $"Logical shift left of value in R{r1} by 0x{op1:X4} bits";
+                    s = $"Logical shift left of R{r1} by {GetOperandFormatting()} bits";
                     break;
                 case Mnemonic.MULT:
-                    s = $"Multiply register R{r1} by 0x{op1:X4}";
+                    s = $"Multiply register R{r1} by {GetOperandFormatting()}";
                     break;
-            }
-            if (addressingMode != AddressingMode.None) {
-                s += Environment.NewLine;
-                s += $"with 0x{op1:X4} being ";
-                if (addressingMode == AddressingMode.SecondRegister)
-                    s += "a second register.";
-                else if (addressingMode == AddressingMode.MemLoc)
-                    s += "a memory address.";
-                else if (addressingMode == AddressingMode.Immediate)
-                    s += "an immediate value.";
             }
             return s;
         }

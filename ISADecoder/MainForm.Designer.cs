@@ -489,6 +489,7 @@
             // 
             this.tbMemTouched.Location = new System.Drawing.Point(229, 309);
             this.tbMemTouched.Name = "tbMemTouched";
+            this.tbMemTouched.ReadOnly = true;
             this.tbMemTouched.Size = new System.Drawing.Size(85, 20);
             this.tbMemTouched.TabIndex = 44;
             // 
@@ -496,6 +497,7 @@
             // 
             this.tbPrevValue.Location = new System.Drawing.Point(229, 343);
             this.tbPrevValue.Name = "tbPrevValue";
+            this.tbPrevValue.ReadOnly = true;
             this.tbPrevValue.Size = new System.Drawing.Size(85, 20);
             this.tbPrevValue.TabIndex = 45;
             // 
@@ -523,6 +525,7 @@
             // 
             this.tbNewValue.Location = new System.Drawing.Point(229, 372);
             this.tbNewValue.Name = "tbNewValue";
+            this.tbNewValue.ReadOnly = true;
             this.tbNewValue.Size = new System.Drawing.Size(85, 20);
             this.tbNewValue.TabIndex = 48;
             // 

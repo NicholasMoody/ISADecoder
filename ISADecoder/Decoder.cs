@@ -28,11 +28,11 @@ namespace ISADecoder {
                 // read instruction bytes 
                 msb = bytes[loc];
                 lsb = bytes[loc + 1];
-                int instSpec = (msb >> 3); // value of the first 5 bits, used to identify instruction 
+                short instSpec = (short)(msb >> 3); // value of the first 5 bits, used to identify instruction 
                 // may not be used for all instructions, but the bits will exist regardless so w/e
-                int addressMode = (msb & 0b00000111); // isolates last three bits of msb
-                int r1 = (lsb >> 4); // most significant 4 bits of lsb
-                int r2 = (lsb & 0b00001111); // least significant 4 bits of lsb
+                short addressMode = (short)(msb & 0b00000111); // isolates last three bits of msb
+                short r1 = (short)(lsb >> 4); // most significant 4 bits of lsb
+                short r2 = (short)(lsb & 0b00001111); // least significant 4 bits of lsb
 
                 Instruction inst = new Instruction();
 
@@ -164,7 +164,7 @@ namespace ISADecoder {
                         throw new Exception("Invalid instruction: cannot fetch operand");
                     inst.instSize += 2;
                     // fetch operand and shove into int 
-                    int operand = bytes[loc + 2];
+                    short operand = bytes[loc + 2];
                     operand <<= 8;
                     operand += bytes[loc + 3];
                     inst.op1 = operand;

@@ -12,9 +12,9 @@ namespace ISADecoder {
     public partial class MainForm : Form {
         TextBox[] registers = new TextBox[16];
         List<Instruction> instructions = new List<Instruction>();
-        int[] memory = new int[1048576]; // stores memory of program for simulation 
-        int branchAddress = -1; // address to branch to, -1 if none 
+        byte[] memory = new byte[1048576]; // stores memory of program for simulation 
         bool done = false;
+        short PCAddr = 0; // internal PC count so that register text can easily be updated at right time 
 
         public MainForm() {
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace ISADecoder {
         private void btnDecode_Click(object sender, EventArgs e) {
             lbOutput.Items.Clear();
             tbInstructionDescription.Text = "";
-            int pc = 0; 
+            short pc = 0; 
             try {
                 Decoder d = new Decoder(tbInput.Text);
 
@@ -108,7 +108,6 @@ namespace ISADecoder {
             if (lbOutput.SelectedIndex < instructions.Count && lbOutput.SelectedIndex >= 0) {
                 Instruction i = instructions[lbOutput.SelectedIndex];
                 tbInstructionDescription.Text = i.GetDescription();
-
             }
         }
 
@@ -116,21 +115,25 @@ namespace ISADecoder {
         /// Execute the given instruction 
         /// </summary>
         /// <param name="address">PC address of instruction</param>
-        private void Step(int address) {
+        private void Step() {
             Instruction inst = new Instruction();
 
             ResetMemoryTouchedTB();
 
             foreach (Instruction i in instructions) {
-                if (address == i.address) {
+                if (PCAddr == i.address) {
                     inst = i;
                     break;
                 }
             }
 
-            int registerValue = 0;
+            registers[14].Text = ToHexString(PCAddr); // update PC 
+
+            PCAddr += inst.instSize; // update PC for next instruction. will be overwritten if branch. 
+
+            short registerValue = 0;
             if (inst.r1 >= 0) 
-                registerValue = Convert.ToInt32(registers[inst.r1].Text, 16); // value stored in current instruction's register
+                registerValue = Convert.ToInt16(registers[inst.r1].Text, 16); // value stored in current instruction's register
             int operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
@@ -141,9 +144,12 @@ namespace ISADecoder {
                     break;
                 case Mnemonic.ST:
                     tbMemTouched.Text = ToHexString(inst.op1);
-                    tbPrevValue.Text = ToHexString(memory[inst.op1]);
-                    memory[inst.op1] = registerValue; // store value from register in memory address 
-                    tbNewValue.Text = ToHexString(memory[inst.op1]);
+                    tbPrevValue.Text = ToHexFromMemory(inst.op1);
+
+                    memory[inst.op1] = (byte)(registerValue >> 8); // most significant byte of value
+                    memory[inst.op1 + 1] = (byte)(registerValue & 0b11111111); // least significant byte of value
+
+                    tbNewValue.Text = ToHexFromMemory(inst.op1);
                     break;
                 case Mnemonic.MOV:
                     // moves operand into register depending on addressing mode 
@@ -164,31 +170,31 @@ namespace ISADecoder {
                     registers[15].Text = ToHexString(flag);
                     break;
                 case Mnemonic.B:
-                    branchAddress = inst.op1;
+                    PCAddr = inst.op1;
                     break;
                 case Mnemonic.BL:
                     if (NFlagSet())
-                        branchAddress = inst.op1;
+                        PCAddr = inst.op1;
                     break;
                 case Mnemonic.BLE:
                     if (ZFlagSet() || NFlagSet())
-                        branchAddress = inst.op1;
+                        PCAddr = inst.op1;
                     break;
                 case Mnemonic.BG:
                     if (!NFlagSet())
-                        branchAddress = inst.op1;
+                        PCAddr = inst.op1;
                     break;
                 case Mnemonic.BGE:
                     if (ZFlagSet() || !NFlagSet())
-                        branchAddress = inst.op1;
+                        PCAddr = inst.op1;
                     break;
                 case Mnemonic.BE:
                     if (ZFlagSet())
-                        branchAddress = inst.op1;
+                        PCAddr = inst.op1;
                     break;
                 case Mnemonic.BNE:
                     if (!ZFlagSet())
-                        branchAddress = inst.op1;
+                        PCAddr = inst.op1;
                     break;
                 case Mnemonic.STOP:
                     done = true;
@@ -234,6 +240,10 @@ namespace ISADecoder {
             return "0x" + val.ToString("X4");
         }
 
+        private string ToHexFromMemory(int address) {
+            return $"0x{memory[address]:X2}{memory[address + 1]:X2}";
+        }
+
         private bool NFlagSet() {
             int flag = HexToInt(registers[15].Text) >> 3;
             return flag % 2 == 1;
@@ -245,7 +255,7 @@ namespace ISADecoder {
         }
 
         private int HexToInt(string hex) {
-            return Convert.ToInt32(hex, 16);
+            return Convert.ToInt16(hex, 16);
         }
 
         private void btnRun_Click(object sender, EventArgs e) {
@@ -253,34 +263,29 @@ namespace ISADecoder {
             lbOutput.Enabled = false;
             btnStep.Enabled = true;
             btnRun.Enabled = false;
-            Step(0);
+            Step();
             btnDecode.Enabled = false;
+            done = false;
         }
 
         private void btnStep_Click(object sender, EventArgs e) {
-            if (done) {
+            if (done) { // reset memes 
                 lbOutput.SelectedIndex = 0;
                 lbOutput.Enabled = true;
                 btnStep.Enabled = false;
                 btnRun.Enabled = true;
                 btnDecode.Enabled = true;
+                registers[14].Text = "0x0000"; // reset PC 
             }
-            if (lbOutput.SelectedIndex < lbOutput.Items.Count - 1) {
-                if (branchAddress == -1) {
-                    lbOutput.SelectedIndex++;
-                    Step(instructions[lbOutput.SelectedIndex].address);
-                }
-                else { // if previous instruction was a branch 
-                    // find index of next instruction 
-                    for (int i = 0; i < instructions.Count; i++) {
-                        if (instructions[i].address == branchAddress) {
-                            lbOutput.SelectedIndex = i;
-                            break;
-                        }
+            else if (lbOutput.SelectedIndex < lbOutput.Items.Count - 1) {
+                // move LB selection to next instruction 
+                for (int i = 0; i < instructions.Count; i++) {
+                    if (instructions[i].address == PCAddr) {
+                        lbOutput.SelectedIndex = i;
+                        break;
                     }
-                    Step(branchAddress);
-                    branchAddress = -1;
                 }
+                Step();
             }
         }
 
