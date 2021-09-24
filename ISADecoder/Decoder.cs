@@ -49,111 +49,95 @@ namespace ISADecoder {
                         inst.mnemonic = Mnemonic.LD;
                         inst.type = Type.Memory;
                         inst.r1 = r1;
-                        // pull memory loc here PLACEHOLDER
+                        inst.addressingMode = GetAddressingMode(addressMode);
                         break;
                     case 0b00010:
                         inst.mnemonic = Mnemonic.ST;
                         inst.type = Type.Memory;
                         inst.r1 = r1;
-                        // pull memory loc here PLACEHOLDER
+                        inst.addressingMode = GetAddressingMode(addressMode);
                         break;
                     case 0b00011:
                         inst.mnemonic = Mnemonic.MOV;
                         inst.type = Type.DataHandling;
                         inst.r1 = r1;
                         inst.addressingMode = GetAddressingMode(addressMode);
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b00100:
                         inst.mnemonic = Mnemonic.COM;
                         inst.type = Type.DataHandling;
                         inst.r1 = r1;
                         inst.addressingMode = GetAddressingMode(addressMode);
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b00101:
                         inst.mnemonic = Mnemonic.B;
                         inst.type = Type.ControlFlow;
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b00110:
                         inst.mnemonic = Mnemonic.BL;
                         inst.type = Type.ControlFlow;
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b00111:
                         inst.mnemonic = Mnemonic.BLE;
                         inst.type = Type.ControlFlow;
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b01000:
                         inst.mnemonic = Mnemonic.BG;
                         inst.type = Type.ControlFlow;
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b01001:
                         inst.mnemonic = Mnemonic.BGE;
                         inst.type = Type.ControlFlow;
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b01010:
                         inst.mnemonic = Mnemonic.BE;
                         inst.type = Type.ControlFlow;
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b01011:
                         inst.mnemonic = Mnemonic.BNE;
                         inst.type = Type.ControlFlow;
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b01100:
                         inst.mnemonic = Mnemonic.ADD;
                         inst.type = Type.Arithmetic;
                         inst.r1 = r1;
                         inst.addressingMode = GetAddressingMode(addressMode);
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b01101:
                         inst.mnemonic = Mnemonic.SUB;
                         inst.type = Type.Arithmetic;
                         inst.r1 = r1;
                         inst.addressingMode = GetAddressingMode(addressMode);
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b01110:
                         inst.mnemonic = Mnemonic.ASL;
                         inst.type = Type.Arithmetic;
                         inst.r1 = r1;
                         inst.addressingMode = GetAddressingMode(addressMode);
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b01111:
                         inst.mnemonic = Mnemonic.LSR;
                         inst.type = Type.Arithmetic;
                         inst.r1 = r1;
                         inst.addressingMode = GetAddressingMode(addressMode);
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b10000:
                         inst.mnemonic = Mnemonic.ASR;
                         inst.type = Type.Arithmetic;
                         inst.r1 = r1;
                         inst.addressingMode = GetAddressingMode(addressMode);
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b10001:
                         inst.mnemonic = Mnemonic.LSL;
                         inst.type = Type.Arithmetic;
                         inst.r1 = r1;
                         inst.addressingMode = GetAddressingMode(addressMode);
-                        // pull operand here PLACEHOLDER
                         break;
                     case 0b10010:
                         inst.mnemonic = Mnemonic.MULT;
                         inst.type = Type.Arithmetic;
                         inst.r1 = r1;
                         inst.addressingMode = GetAddressingMode(addressMode);
-                        // pull operand here PLACEHOLDER
                         break;
                     default:
                         throw new Exception("Invalid instruction specifier");

@@ -71,6 +71,7 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.btnViewMem = new System.Windows.Forms.Button();
+            this.btnRunToEnd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbR0
@@ -420,6 +421,7 @@
             this.tbInstructionDescription.Location = new System.Drawing.Point(549, 367);
             this.tbInstructionDescription.Multiline = true;
             this.tbInstructionDescription.Name = "tbInstructionDescription";
+            this.tbInstructionDescription.ReadOnly = true;
             this.tbInstructionDescription.Size = new System.Drawing.Size(239, 51);
             this.tbInstructionDescription.TabIndex = 36;
             // 
@@ -531,11 +533,23 @@
             this.btnViewMem.UseVisualStyleBackColor = true;
             this.btnViewMem.Click += new System.EventHandler(this.btnViewMem_Click);
             // 
+            // btnRunToEnd
+            // 
+            this.btnRunToEnd.Enabled = false;
+            this.btnRunToEnd.Location = new System.Drawing.Point(386, 279);
+            this.btnRunToEnd.Name = "btnRunToEnd";
+            this.btnRunToEnd.Size = new System.Drawing.Size(157, 39);
+            this.btnRunToEnd.TabIndex = 55;
+            this.btnRunToEnd.Text = "Run to End";
+            this.btnRunToEnd.UseVisualStyleBackColor = true;
+            this.btnRunToEnd.Click += new System.EventHandler(this.btnRunToEnd_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 428);
+            this.Controls.Add(this.btnRunToEnd);
             this.Controls.Add(this.btnViewMem);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label24);
@@ -642,6 +656,7 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Button btnViewMem;
+        private System.Windows.Forms.Button btnRunToEnd;
     }
 }
 

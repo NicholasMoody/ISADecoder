@@ -10,14 +10,14 @@ namespace ISADecoder {
         byte[] memory = new byte[1048576]; // stores memory of program for simulation 
         bool done = false;
         short PCAddr = 0; // internal PC count so that register text can easily be updated at right time 
+        int PCreg = 14;
+        int FlagsReg = 15;
 
         public MainForm() {
             InitializeComponent();
             // build register array
             int rCount = 0;
-            for (int i = 0; i < memory.Length; i++) {
-                memory[i] = 74;
-            }
+
             foreach (TextBox t in this.Controls.OfType<TextBox>()) {
                 if (t.Name.StartsWith("tbR")) {
                     t.Text = "0x0000";
@@ -120,7 +120,7 @@ namespace ISADecoder {
                 }
             }
 
-            registers[14].Text = ToHexString(PCAddr); // update PC 
+            registers[PCreg].Text = ToHexString(PCAddr); // update PC 
 
             PCAddr += inst.instSize; // update PC for next instruction. will be overwritten if branch. 
 
@@ -130,14 +130,13 @@ namespace ISADecoder {
             short operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
-                    registers[inst.r1].Text = ToHexString(memory[inst.op1]); // load value in memory address to register
+                    registers[inst.r1].Text = ToHexString(operandVal); // load value in memory address to register
                     ViewMemoryAt(inst.op1);
                     break;
                 case Mnemonic.ST:
-
-                    memory[inst.op1] = (byte)(registerValue >> 8); // most significant byte of value
-                    memory[inst.op1 + 1] = (byte)(registerValue & 0b11111111); // least significant byte of value
-                    ViewMemoryAt(inst.op1);
+                    memory[operandVal] = (byte)(registerValue >> 8); // most significant byte of value
+                    memory[operandVal + 1] = (byte)(registerValue & 0b11111111); // least significant byte of value
+                    ViewMemoryAt(operandVal);
                     break;
                 case Mnemonic.MOV:
                     // moves operand into register depending on addressing mode 
@@ -151,7 +150,7 @@ namespace ISADecoder {
                         flag |= 0b100; // sets zero flag
                         flag &= 0b0111; // unsets negative flag
                     }
-                    if (comp < 0) {
+                    else if (comp < 0) {
                         flag |= 0b1000; // sets negative flag
                         flag &= 0b1011; // unset zero flag
                     }
@@ -251,12 +250,12 @@ namespace ISADecoder {
         }
 
         private bool NFlagSet() {
-            int flag = HexToInt(registers[15].Text) >> 3;
+            int flag = HexToInt(registers[FlagsReg].Text) >> 3;
             return flag % 2 == 1;
         }
 
         private bool ZFlagSet() {
-            int flag = HexToInt(registers[15].Text) >> 2;
+            int flag = HexToInt(registers[FlagsReg].Text) >> 2;
             return flag % 2 == 1;
         }
 
@@ -269,6 +268,7 @@ namespace ISADecoder {
             lbOutput.Enabled = false;
             btnStep.Enabled = true;
             btnRun.Enabled = false;
+            btnRunToEnd.Enabled = true;
             Step();
             btnDecode.Enabled = false;
             done = false;
@@ -281,7 +281,7 @@ namespace ISADecoder {
                 btnStep.Enabled = false;
                 btnRun.Enabled = true;
                 btnDecode.Enabled = true;
-                registers[14].Text = "0x0000"; // reset PC 
+                registers[PCreg].Text = "0x0000"; // reset PC 
             }
             else if (lbOutput.SelectedIndex < lbOutput.Items.Count - 1) {
                 // move LB selection to next instruction 
@@ -304,6 +304,23 @@ namespace ISADecoder {
                 MessageBox.Show("Invalid memory address. Input should be four hex characters.", "Invalid Input", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnRunToEnd_Click(object sender, EventArgs e) {
+            while (!done) {
+                Step();
+            }
+            Reset();
+        }
+
+        private void Reset() {
+            lbOutput.SelectedIndex = 0;
+            lbOutput.Enabled = true;
+            btnStep.Enabled = false;
+            btnRun.Enabled = true;
+            btnDecode.Enabled = true;
+            registers[PCreg].Text = "0x0000"; // reset PC 
+            btnRunToEnd.Enabled = false;
         }
     }
 }

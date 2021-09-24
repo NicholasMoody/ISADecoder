@@ -55,10 +55,21 @@ namespace ISADecoder {
 
             switch (mnemonic) {
                 case Mnemonic.LD:
-                    s = $"Load value from 0x{op1:X4} to R{r1}";
+                    s = $"Load value from {GetOperandFormatting()} to R{r1}";
+                    if (addressingMode == AddressingMode.MemLoc)
+                        s = $"Load value from {GetOperandFormatting()} to R{r1}";
+                    else if (addressingMode == AddressingMode.SecondRegister)
+                        s = $"Load value from address in {GetOperandFormatting()} to R{r1}";
+                    else if (addressingMode == AddressingMode.Immediate)
+                        s = $"Load value from 0x{op1:X4} to R{r1}";
                     break;
                 case Mnemonic.ST:
-                    s = $"Store value from R{r1} to 0x{op1:X4}";
+                    if (addressingMode == AddressingMode.MemLoc)
+                        s = $"Store value from R{r1} to {GetOperandFormatting()}";
+                    else if (addressingMode == AddressingMode.SecondRegister)
+                        s = $"Store value from R{r1} to address in {GetOperandFormatting()}";
+                    else if (addressingMode == AddressingMode.Immediate)
+                        s = $"Store value from R{r1} to 0x{op1:X4}";
                     break;
                 case Mnemonic.MOV:
                     s = $"Move {GetOperandFormatting()} to R{r1}";
