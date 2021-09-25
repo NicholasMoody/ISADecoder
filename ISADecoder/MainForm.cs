@@ -7,7 +7,8 @@ namespace ISADecoder {
     public partial class MainForm : Form {
         TextBox[] registers = new TextBox[16];
         List<Instruction> instructions = new List<Instruction>();
-        byte[] memory = new byte[1048576]; // stores memory of program for simulation 
+        int memSize = 1048576;
+        byte[] memory; // stores memory of program for simulation 
         bool done = false;
         short PCAddr = 0; // internal PC count so that register text can easily be updated at right time 
         int PCreg = 14;
@@ -29,11 +30,18 @@ namespace ISADecoder {
         }
 
         private void btnDecode_Click(object sender, EventArgs e) {
+            // reset things 
             lbOutput.Items.Clear();
             tbInstructionDescription.Text = "";
+            foreach (TextBox tb in registers) {
+                tb.Text = "0x0000";
+            }
+            PCAddr = 0;
+            memory = new byte[memSize];
             short pc = 0; 
+
             try {
-                Decoder d = new Decoder(tbInput.Text);
+                Decoder d = new Decoder(tbInput.Text, memory);
 
                 foreach (Instruction i in d.instructions) {
                     lbOutput.Items.Add("0x" + pc.ToString("X4") + " | " + i.ToString());
@@ -231,7 +239,7 @@ namespace ISADecoder {
             else if (inst.addressingMode == AddressingMode.MemLoc)
                 val = memory[inst.op1];
             else if (inst.addressingMode == AddressingMode.SecondRegister)
-                val = Convert.ToInt16(registers[inst.op1].Text, 16);
+                val = HexToInt(registers[inst.r2].Text);
             return val;
         }
 
