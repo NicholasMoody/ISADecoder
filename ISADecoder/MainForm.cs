@@ -6,6 +6,9 @@ using System.Windows.Forms;
 namespace ISADecoder {
     public partial class MainForm : Form {
         TextBox[] registers = new TextBox[16];
+        // negative values do wierd shit and do not convert to hex conveniently 
+        // thus, i should stop being stupid and actually keep the values of registers as shorts, not just as fucking text lmao 
+        short[] registerVals = new short[16];
         List<Instruction> instructions = new List<Instruction>();
         int memSize = 1048576;
         byte[] memory; // stores memory of program for simulation 
@@ -33,6 +36,7 @@ namespace ISADecoder {
             // reset things 
             lbOutput.Items.Clear();
             tbInstructionDescription.Text = "";
+            registerVals = new short[16];
             foreach (TextBox tb in registers) {
                 tb.Text = "0x0000";
             }
@@ -129,15 +133,18 @@ namespace ISADecoder {
             }
 
             registers[PCreg].Text = ToHexString(PCAddr); // update PC 
+            registerVals[PCreg] = PCAddr;
 
             PCAddr += inst.instSize; // update PC for next instruction. will be overwritten if branch. 
 
             short registerValue = 0;
             if (inst.r1 >= 0) 
-                registerValue = Convert.ToInt16(registers[inst.r1].Text, 16); // value stored in current instruction's register
+                registerValue = registerVals[inst.r1]; // value stored in current instruction's register
+
             short operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
+                    registerVals[inst.r1] = operandVal;
                     registers[inst.r1].Text = ToHexString(operandVal); // load value in memory address to register
                     ViewMemoryAt(inst.op1);
                     break;
@@ -148,11 +155,12 @@ namespace ISADecoder {
                     break;
                 case Mnemonic.MOV:
                     // moves operand into register depending on addressing mode 
+                    registerVals[inst.r1] = operandVal;
                     registers[inst.r1].Text = ToHexString(operandVal);
                     break;
                 case Mnemonic.COM:
                     // subtracts operand value from register value and sets flags
-                    int comp = HexToInt(registers[inst.r1].Text) - operandVal;
+                    int comp = registerVals[inst.r1] - operandVal;
                     short flag = 0;
                     if (comp == 0) {  
                         flag |= 0b100; // sets zero flag
@@ -162,7 +170,8 @@ namespace ISADecoder {
                         flag |= 0b1000; // sets negative flag
                         flag &= 0b1011; // unset zero flag
                     }
-                    registers[15].Text = ToHexString(flag);
+                    registerVals[FlagsReg] = flag;
+                    registers[FlagsReg].Text = ToHexString(flag);
                     break;
                 case Mnemonic.B:
                     PCAddr = inst.op1;
@@ -195,27 +204,34 @@ namespace ISADecoder {
                     done = true;
                     break;
                 case Mnemonic.ADD:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue + operandVal));
+                    registerVals[inst.r1] = (short)(registerValue + operandVal);
+                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.SUB:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue - operandVal));
+                    registerVals[inst.r1] = (short)(registerValue - operandVal);
+                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 // NOTE: all arithmetic and logical shifts do the same thing here
                 // either change how ints are handled or remove one type of shift (easier)
                 case Mnemonic.ASL:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue << operandVal));
+                    registerVals[inst.r1] = (short)(registerValue << operandVal);
+                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.LSR:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue >> operandVal));
+                    registerVals[inst.r1] = (short)(registerValue >> operandVal);
+                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.ASR:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue >> operandVal));
+                    registerVals[inst.r1] = (short)(registerValue >> operandVal);
+                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.LSL:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue << operandVal));
+                    registerVals[inst.r1] = (short)(registerValue << operandVal);
+                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.MULT:
-                    registers[inst.r1].Text = ToHexString((short)(operandVal * registerValue));
+                    registerVals[inst.r1] = (short)(operandVal * registerValue);
+                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
             }
         }
