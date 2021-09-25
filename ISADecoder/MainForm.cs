@@ -16,16 +16,75 @@ namespace ISADecoder {
         public MainForm() {
             InitializeComponent();
             // build register array
-            int rCount = 0;
+            //int rCount = 0;
 
-            foreach (TextBox t in this.Controls.OfType<TextBox>()) {
+            foreach (TextBox t in this.decoderPanel.Controls.OfType<TextBox>()) {
+
+                if (t.Name.StartsWith("tbR"))
+                    t.Text = "0x0000";
+
+                switch (t.Name)
+                {
+                    case ("tbR0"):
+                        registers[0] = t;
+                        break;
+                    case ("tbR1"):
+                        registers[1] = t;
+                        break;
+                    case ("tbR2"):
+                        registers[2] = t;
+                        break;
+                    case ("tbR3"):
+                        registers[3] = t;
+                        break;
+                    case ("tbR4"):
+                        registers[4] = t;
+                        break;
+                    case ("tbR5"):
+                        registers[5] = t;
+                        break;
+                    case ("tbR6"):
+                        registers[6] = t;
+                        break;
+                    case ("tbR7"):
+                        registers[7] = t;
+                        break;
+                    case ("tbR8"):
+                        registers[8] = t;
+                        break;
+                    case ("tbR9"):
+                        registers[9] = t;
+                        break;
+                    case ("tbR10"):
+                        registers[10] = t;
+                        break;
+                    case ("tbR11"):
+                        registers[11] = t;
+                        break;
+                    case ("tbR12"):
+                        registers[12] = t;
+                        break;
+                    case ("tbR13"):
+                        registers[13] = t;
+                        break;
+                    case ("tbR14"):
+                        registers[14] = t;
+                        break;
+                    case ("tbR15"):
+                        registers[15] = t;
+                        break;
+                    default:
+                        break;
+                }
+                /*
                 if (t.Name.StartsWith("tbR")) {
                     t.Text = "0x0000";
                     registers[rCount] = t;
                     rCount++;
                 } 
+                */
             }
-            Array.Reverse(registers);
+            //Array.Reverse(registers);
         }
 
         private void btnDecode_Click(object sender, EventArgs e) {
@@ -321,6 +380,22 @@ namespace ISADecoder {
             btnDecode.Enabled = true;
             registers[PCreg].Text = "0x0000"; // reset PC 
             btnRunToEnd.Enabled = false;
+        }
+
+        private void switchModeButton_Click(object sender, EventArgs e)
+        {
+            if(decoderPanel.Visible)
+            {
+                decoderPanel.Visible = false;
+                encoderPanel.Visible = true;
+                switchModeButton.Text = "Swap to Decoder";
+            }
+            else
+            {
+                decoderPanel.Visible = true;
+                encoderPanel.Visible = false;
+                switchModeButton.Text = "Swap to Encoder";
+            }    
         }
     }
 }
