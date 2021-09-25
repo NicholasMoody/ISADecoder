@@ -563,7 +563,6 @@
             // 
             // decoderPanel
             // 
-            this.decoderPanel.Controls.Add(this.encoderPanel);
             this.decoderPanel.Controls.Add(this.lblStats);
             this.decoderPanel.Controls.Add(this.lbOutput);
             this.decoderPanel.Controls.Add(this.btnRunToEnd);
@@ -622,7 +621,7 @@
             // 
             // encoderPanel
             // 
-            this.encoderPanel.Location = new System.Drawing.Point(0, 0);
+            this.encoderPanel.Location = new System.Drawing.Point(6, 6);
             this.encoderPanel.Name = "encoderPanel";
             this.encoderPanel.Size = new System.Drawing.Size(782, 416);
             this.encoderPanel.TabIndex = 58;
@@ -654,6 +653,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 428);
             this.Controls.Add(this.switchModeButton);
+            this.Controls.Add(this.encoderPanel);
             this.Controls.Add(this.decoderPanel);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
