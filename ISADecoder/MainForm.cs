@@ -145,7 +145,6 @@ namespace ISADecoder {
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
                     registerVals[inst.r1] = operandVal;
-                    registers[inst.r1].Text = ToHexString(operandVal); // load value in memory address to register
                     ViewMemoryAt(inst.op1);
                     break;
                 case Mnemonic.ST:
@@ -156,7 +155,6 @@ namespace ISADecoder {
                 case Mnemonic.MOV:
                     // moves operand into register depending on addressing mode 
                     registerVals[inst.r1] = operandVal;
-                    registers[inst.r1].Text = ToHexString(operandVal);
                     break;
                 case Mnemonic.COM:
                     // subtracts operand value from register value and sets flags
@@ -205,36 +203,33 @@ namespace ISADecoder {
                     break;
                 case Mnemonic.ADD:
                     registerVals[inst.r1] = (short)(registerValue + operandVal);
-                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.SUB:
                     registerVals[inst.r1] = (short)(registerValue - operandVal);
-                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 // NOTE: all arithmetic and logical shifts do the same thing here
                 // either change how ints are handled or remove one type of shift (easier)
                 case Mnemonic.ASL:
                     registerVals[inst.r1] = (short)(registerValue << operandVal);
-                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.LSR:
                     registerVals[inst.r1] = (short)(registerValue >> operandVal);
-                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.ASR:
                     registerVals[inst.r1] = (short)(registerValue >> operandVal);
-                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.LSL:
                     registerVals[inst.r1] = (short)(registerValue << operandVal);
-                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
                 case Mnemonic.MULT:
                     registerVals[inst.r1] = (short)(operandVal * registerValue);
-                    registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                     break;
             }
+            if (inst.r1 >= 0) {
+                registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
+            }
         }
+
 
         // fill textbox with memory at address including its 10 neighbors (words, not bytes) 
         // ADDRESS SHOULD BE EVEN, OTHERWISE WEIRD SHIT WILL HAPPEN
