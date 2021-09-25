@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -131,6 +132,10 @@ namespace ISADecoder {
                     break;
                 }
             }
+            //reset register colors
+            foreach (TextBox tb in registers) {
+                tb.BackColor = SystemColors.Control;
+            }
 
             registers[PCreg].Text = ToHexString(PCAddr); // update PC 
             registerVals[PCreg] = PCAddr;
@@ -170,6 +175,7 @@ namespace ISADecoder {
                     }
                     registerVals[FlagsReg] = flag;
                     registers[FlagsReg].Text = ToHexString(flag);
+                    registers[FlagsReg].BackColor = Color.LightGreen;
                     break;
                 case Mnemonic.B:
                     PCAddr = inst.op1;
@@ -227,6 +233,7 @@ namespace ISADecoder {
             }
             if (inst.r1 >= 0) {
                 registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
+                registers[inst.r1].BackColor = Color.LightGreen;
             }
         }
 
