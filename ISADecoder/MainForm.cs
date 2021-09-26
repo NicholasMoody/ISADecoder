@@ -423,5 +423,32 @@ namespace ISADecoder {
                 switchModeButton.Text = "Swap to Encoder";
             }    
         }
+
+        private void instructionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void operandTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(operandTypeComboBox.Text == "Register")
+            {
+                operandLabel.Text = "Register 2";
+                operandNumericUpDown.Maximum = 13;
+                operandNumericUpDown.Minimum = 0;
+            }
+            else if (operandTypeComboBox.Text == "Immediate")
+            {
+                operandLabel.Text = "Immediate Value";
+                operandNumericUpDown.Maximum = 65535;
+                operandNumericUpDown.Minimum = 0;
+            }
+            if (operandTypeComboBox.Text == "Memory")
+            {
+                operandLabel.Text = "Memory Address";
+                operandNumericUpDown.Maximum = 1048575;
+                operandNumericUpDown.Minimum = 0;
+            }
+        }
     }
 }

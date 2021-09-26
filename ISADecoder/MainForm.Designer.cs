@@ -74,10 +74,29 @@
             this.btnRunToEnd = new System.Windows.Forms.Button();
             this.switchModeButton = new System.Windows.Forms.Button();
             this.decoderPanel = new System.Windows.Forms.Panel();
-            this.encoderPanel = new System.Windows.Forms.Panel();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
+            this.encoderPanel = new System.Windows.Forms.Panel();
+            this.saveCodeButton = new System.Windows.Forms.Button();
+            this.translateInstructionsButton = new System.Windows.Forms.Button();
+            this.removeInstructionButton = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.instructionListListBox = new System.Windows.Forms.ListBox();
+            this.hexCodeLabel = new System.Windows.Forms.Label();
+            this.instructionListLabel = new System.Windows.Forms.Label();
+            this.addInstructionButton = new System.Windows.Forms.Button();
+            this.operandLabel = new System.Windows.Forms.Label();
+            this.register1Label = new System.Windows.Forms.Label();
+            this.operandTypeLabel = new System.Windows.Forms.Label();
+            this.instructionLabel = new System.Windows.Forms.Label();
+            this.operandNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.Register1NumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.operandTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.instructionComboBox = new System.Windows.Forms.ComboBox();
             this.decoderPanel.SuspendLayout();
+            this.encoderPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.operandNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Register1NumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // tbR0
@@ -435,7 +454,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(627, 344);
+            this.label17.Location = new System.Drawing.Point(627, 349);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(71, 13);
             this.label17.TabIndex = 37;
@@ -619,19 +638,11 @@
             this.decoderPanel.Size = new System.Drawing.Size(782, 416);
             this.decoderPanel.TabIndex = 57;
             // 
-            // encoderPanel
-            // 
-            this.encoderPanel.Location = new System.Drawing.Point(6, 6);
-            this.encoderPanel.Name = "encoderPanel";
-            this.encoderPanel.Size = new System.Drawing.Size(782, 416);
-            this.encoderPanel.TabIndex = 58;
-            this.encoderPanel.Visible = false;
-            // 
             // label22
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(171, 204);
+            this.label22.Location = new System.Drawing.Point(170, 200);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(39, 13);
             this.label22.TabIndex = 57;
@@ -641,11 +652,211 @@
             // 
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(97, 204);
+            this.label21.Location = new System.Drawing.Point(96, 200);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(52, 13);
             this.label21.TabIndex = 56;
             this.label21.Text = "Address";
+            // 
+            // encoderPanel
+            // 
+            this.encoderPanel.Controls.Add(this.saveCodeButton);
+            this.encoderPanel.Controls.Add(this.translateInstructionsButton);
+            this.encoderPanel.Controls.Add(this.removeInstructionButton);
+            this.encoderPanel.Controls.Add(this.textBox1);
+            this.encoderPanel.Controls.Add(this.instructionListListBox);
+            this.encoderPanel.Controls.Add(this.hexCodeLabel);
+            this.encoderPanel.Controls.Add(this.instructionListLabel);
+            this.encoderPanel.Controls.Add(this.addInstructionButton);
+            this.encoderPanel.Controls.Add(this.operandLabel);
+            this.encoderPanel.Controls.Add(this.register1Label);
+            this.encoderPanel.Controls.Add(this.operandTypeLabel);
+            this.encoderPanel.Controls.Add(this.instructionLabel);
+            this.encoderPanel.Controls.Add(this.operandNumericUpDown);
+            this.encoderPanel.Controls.Add(this.Register1NumericUpDown);
+            this.encoderPanel.Controls.Add(this.operandTypeComboBox);
+            this.encoderPanel.Controls.Add(this.instructionComboBox);
+            this.encoderPanel.Location = new System.Drawing.Point(6, 6);
+            this.encoderPanel.Name = "encoderPanel";
+            this.encoderPanel.Size = new System.Drawing.Size(782, 416);
+            this.encoderPanel.TabIndex = 58;
+            this.encoderPanel.Visible = false;
+            // 
+            // saveCodeButton
+            // 
+            this.saveCodeButton.Location = new System.Drawing.Point(297, 288);
+            this.saveCodeButton.Name = "saveCodeButton";
+            this.saveCodeButton.Size = new System.Drawing.Size(191, 64);
+            this.saveCodeButton.TabIndex = 15;
+            this.saveCodeButton.Text = "Save Code";
+            this.saveCodeButton.UseVisualStyleBackColor = true;
+            // 
+            // translateInstructionsButton
+            // 
+            this.translateInstructionsButton.Location = new System.Drawing.Point(297, 214);
+            this.translateInstructionsButton.Name = "translateInstructionsButton";
+            this.translateInstructionsButton.Size = new System.Drawing.Size(191, 64);
+            this.translateInstructionsButton.TabIndex = 14;
+            this.translateInstructionsButton.Text = "Translate Instructions";
+            this.translateInstructionsButton.UseVisualStyleBackColor = true;
+            // 
+            // removeInstructionButton
+            // 
+            this.removeInstructionButton.Location = new System.Drawing.Point(297, 140);
+            this.removeInstructionButton.Name = "removeInstructionButton";
+            this.removeInstructionButton.Size = new System.Drawing.Size(191, 64);
+            this.removeInstructionButton.TabIndex = 13;
+            this.removeInstructionButton.Text = "Remove Instruction";
+            this.removeInstructionButton.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(494, 87);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(230, 265);
+            this.textBox1.TabIndex = 12;
+            // 
+            // instructionListListBox
+            // 
+            this.instructionListListBox.FormattingEnabled = true;
+            this.instructionListListBox.Location = new System.Drawing.Point(61, 88);
+            this.instructionListListBox.Name = "instructionListListBox";
+            this.instructionListListBox.Size = new System.Drawing.Size(230, 264);
+            this.instructionListListBox.TabIndex = 11;
+            // 
+            // hexCodeLabel
+            // 
+            this.hexCodeLabel.AutoSize = true;
+            this.hexCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hexCodeLabel.Location = new System.Drawing.Point(562, 72);
+            this.hexCodeLabel.Name = "hexCodeLabel";
+            this.hexCodeLabel.Size = new System.Drawing.Size(112, 13);
+            this.hexCodeLabel.TabIndex = 10;
+            this.hexCodeLabel.Text = "Hexadecimal Code";
+            // 
+            // instructionListLabel
+            // 
+            this.instructionListLabel.AutoSize = true;
+            this.instructionListLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.instructionListLabel.Location = new System.Drawing.Point(134, 72);
+            this.instructionListLabel.Name = "instructionListLabel";
+            this.instructionListLabel.Size = new System.Drawing.Size(91, 13);
+            this.instructionListLabel.TabIndex = 9;
+            this.instructionListLabel.Text = "Instruction List";
+            // 
+            // addInstructionButton
+            // 
+            this.addInstructionButton.Location = new System.Drawing.Point(297, 66);
+            this.addInstructionButton.Name = "addInstructionButton";
+            this.addInstructionButton.Size = new System.Drawing.Size(191, 64);
+            this.addInstructionButton.TabIndex = 8;
+            this.addInstructionButton.Text = "Add Instruction";
+            this.addInstructionButton.UseVisualStyleBackColor = true;
+            // 
+            // operandLabel
+            // 
+            this.operandLabel.AutoSize = true;
+            this.operandLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.operandLabel.Location = new System.Drawing.Point(514, 19);
+            this.operandLabel.Name = "operandLabel";
+            this.operandLabel.Size = new System.Drawing.Size(65, 13);
+            this.operandLabel.TabIndex = 7;
+            this.operandLabel.Text = "Register 2";
+            // 
+            // register1Label
+            // 
+            this.register1Label.AutoSize = true;
+            this.register1Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.register1Label.Location = new System.Drawing.Point(388, 19);
+            this.register1Label.Name = "register1Label";
+            this.register1Label.Size = new System.Drawing.Size(65, 13);
+            this.register1Label.TabIndex = 6;
+            this.register1Label.Text = "Register 1";
+            // 
+            // operandTypeLabel
+            // 
+            this.operandTypeLabel.AutoSize = true;
+            this.operandTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.operandTypeLabel.Location = new System.Drawing.Point(261, 19);
+            this.operandTypeLabel.Name = "operandTypeLabel";
+            this.operandTypeLabel.Size = new System.Drawing.Size(87, 13);
+            this.operandTypeLabel.TabIndex = 5;
+            this.operandTypeLabel.Text = "Operand Type";
+            // 
+            // instructionLabel
+            // 
+            this.instructionLabel.AutoSize = true;
+            this.instructionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.instructionLabel.Location = new System.Drawing.Point(134, 19);
+            this.instructionLabel.Name = "instructionLabel";
+            this.instructionLabel.Size = new System.Drawing.Size(67, 13);
+            this.instructionLabel.TabIndex = 4;
+            this.instructionLabel.Text = "Instruction";
+            // 
+            // operandNumericUpDown
+            // 
+            this.operandNumericUpDown.Location = new System.Drawing.Point(517, 35);
+            this.operandNumericUpDown.Name = "operandNumericUpDown";
+            this.operandNumericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.operandNumericUpDown.TabIndex = 3;
+            // 
+            // Register1NumericUpDown
+            // 
+            this.Register1NumericUpDown.Location = new System.Drawing.Point(391, 35);
+            this.Register1NumericUpDown.Maximum = new decimal(new int[] {
+            13,
+            0,
+            0,
+            0});
+            this.Register1NumericUpDown.Name = "Register1NumericUpDown";
+            this.Register1NumericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.Register1NumericUpDown.TabIndex = 2;
+            // 
+            // operandTypeComboBox
+            // 
+            this.operandTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.operandTypeComboBox.FormattingEnabled = true;
+            this.operandTypeComboBox.Items.AddRange(new object[] {
+            "Register",
+            "Immediate",
+            "Memory"});
+            this.operandTypeComboBox.Location = new System.Drawing.Point(264, 34);
+            this.operandTypeComboBox.Name = "operandTypeComboBox";
+            this.operandTypeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.operandTypeComboBox.TabIndex = 1;
+            this.operandTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.operandTypeComboBox_SelectedIndexChanged);
+            // 
+            // instructionComboBox
+            // 
+            this.instructionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.instructionComboBox.FormattingEnabled = true;
+            this.instructionComboBox.Items.AddRange(new object[] {
+            "LD",
+            "ST",
+            "MOV",
+            "COM",
+            "B",
+            "BL",
+            "BLE",
+            "BG",
+            "BGE",
+            "BE",
+            "BNE",
+            "STOP",
+            "ADD",
+            "SUB",
+            "ASL",
+            "LSR",
+            "ASR",
+            "LSL",
+            "MULT"});
+            this.instructionComboBox.Location = new System.Drawing.Point(137, 34);
+            this.instructionComboBox.Name = "instructionComboBox";
+            this.instructionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.instructionComboBox.TabIndex = 0;
+            this.instructionComboBox.SelectedIndexChanged += new System.EventHandler(this.instructionComboBox_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -660,6 +871,10 @@
             this.Text = "ISADecoder";
             this.decoderPanel.ResumeLayout(false);
             this.decoderPanel.PerformLayout();
+            this.encoderPanel.ResumeLayout(false);
+            this.encoderPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.operandNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Register1NumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -720,6 +935,22 @@
         private System.Windows.Forms.Panel encoderPanel;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.NumericUpDown operandNumericUpDown;
+        private System.Windows.Forms.NumericUpDown Register1NumericUpDown;
+        private System.Windows.Forms.ComboBox operandTypeComboBox;
+        private System.Windows.Forms.ComboBox instructionComboBox;
+        private System.Windows.Forms.Label operandLabel;
+        private System.Windows.Forms.Label register1Label;
+        private System.Windows.Forms.Label operandTypeLabel;
+        private System.Windows.Forms.Label instructionLabel;
+        private System.Windows.Forms.Button addInstructionButton;
+        private System.Windows.Forms.ListBox instructionListListBox;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button saveCodeButton;
+        private System.Windows.Forms.Button translateInstructionsButton;
+        private System.Windows.Forms.Button removeInstructionButton;
+        private System.Windows.Forms.Label hexCodeLabel;
+        private System.Windows.Forms.Label instructionListLabel;
     }
 }
 
