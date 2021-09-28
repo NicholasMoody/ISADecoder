@@ -44,6 +44,11 @@ namespace ISADecoder {
             }
             PCAddr = 0;
             memory = new byte[memSize];
+            instructions = new List<Instruction>();
+            tbMemViewer.Text = "";
+            tbMemSelection.Text = "";
+            lblStats.Text = "";
+
             short pc = 0; 
 
             try {
@@ -152,6 +157,9 @@ namespace ISADecoder {
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
                     registerVals[inst.r1] = memory[GetMemAddressByAddressingMode(inst)];
+                    registerVals[inst.r1] <<= 8;
+                    registerVals[inst.r1] += memory[GetMemAddressByAddressingMode(inst) + 1];
+                    registers[inst.r1].Text = ToHexFromMemory(registerVals[inst.r1]);
                     ViewMemoryAt(GetMemAddressByAddressingMode(inst));
                     break;
                 case Mnemonic.ST:
@@ -246,6 +254,7 @@ namespace ISADecoder {
         // I AM WARNING YOU 
         private void ViewMemoryAt(int address) {
             tbMemViewer.Text = "";
+            tbMemSelection.Text = $"0x{address:X5}";
             for (short i = -12; i <= 12; i += 2) {
                 if (address + i >= 0 && address + i < memory.Length) {
                     tbMemViewer.Text += ToHexStringMemAddr(address + i) + " | " + ToHexFromMemory(address + i) + Environment.NewLine;
@@ -347,11 +356,11 @@ namespace ISADecoder {
 
         private void btnViewMem_Click(object sender, EventArgs e) {
             try {
-                short address = HexToInt(tbMemSelection.Text);
+                int address = HexToInt(tbMemSelection.Text);
                 ViewMemoryAt(address);
             }
             catch (Exception) {
-                MessageBox.Show("Invalid memory address. Input should be four hex characters.", "Invalid Input", 
+                MessageBox.Show("Invalid memory address. Input should be five (or fewer) hex characters.", "Invalid Input", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -362,7 +371,9 @@ namespace ISADecoder {
             }
             Reset();
         }
-
+        /// <summary>
+        /// Resets form state after running/decoding 
+        /// </summary>
         private void Reset() {
             lbOutput.SelectedIndex = 0;
             lbOutput.Enabled = true;

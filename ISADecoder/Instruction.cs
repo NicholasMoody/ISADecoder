@@ -57,7 +57,7 @@ namespace ISADecoder {
                 case Mnemonic.LD:
                     s = $"Load value from {GetOperandFormatting()} to R{r1}";
                     if (addressingMode == AddressingMode.MemLoc)
-                        s = $"Load value from {GetOperandFormatting()} to R{r1}";
+                        s = $"Load {GetOperandFormatting()} to R{r1}";
                     else if (addressingMode == AddressingMode.SecondRegister)
                         s = $"Load value from address in {GetOperandFormatting()} to R{r1}";
                     else if (addressingMode == AddressingMode.Immediate)
