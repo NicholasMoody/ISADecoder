@@ -392,7 +392,6 @@ namespace ISADecoder {
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = "c:\\";
                 openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
@@ -409,11 +408,11 @@ namespace ISADecoder {
                     {
                         fileContent = reader.ReadToEnd();
                     }
+
+                    MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
+                    tbInput.Text = fileContent;
                 }
             }
-
-            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
-            tbInput.Text = fileContent;
         }
     }
 }

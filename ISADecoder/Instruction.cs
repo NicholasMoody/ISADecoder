@@ -25,7 +25,7 @@ namespace ISADecoder {
             if (r1 != -1) {
                 output += $" R{r1}"; 
             }
-            if (op1 != -1 || addressingMode == AddressingMode.SecondRegister) {
+            if (mnemonic != Mnemonic.STOP || addressingMode == AddressingMode.SecondRegister) {
                 if (addressingMode == AddressingMode.Immediate)
                     output += $", {op1}";
                 else if (addressingMode == AddressingMode.MemLoc)
