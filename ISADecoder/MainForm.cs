@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.IO;
-=======
 using System.Drawing;
->>>>>>> f73675241c1087692c95fec7c3211eb63063f99d
 using System.Linq;
 using System.Windows.Forms;
 
 namespace ISADecoder {
     public partial class MainForm : Form {
         TextBox[] registers = new TextBox[16];
-        // negative values do wierd shit and do not convert to hex conveniently 
+        // negative values do strange shit and do not convert to hex conveniently 
         // thus, i should stop being stupid and actually keep the values of registers as shorts, not just as fucking text lmao 
         short[] registerVals = new short[16];
         List<Instruction> instructions = new List<Instruction>();

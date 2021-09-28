@@ -72,12 +72,9 @@
             this.label25 = new System.Windows.Forms.Label();
             this.btnViewMem = new System.Windows.Forms.Button();
             this.btnRunToEnd = new System.Windows.Forms.Button();
-<<<<<<< HEAD
             this.button1 = new System.Windows.Forms.Button();
-=======
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
->>>>>>> f73675241c1087692c95fec7c3211eb63063f99d
             this.SuspendLayout();
             // 
             // tbR0
@@ -550,7 +547,6 @@
             this.btnRunToEnd.UseVisualStyleBackColor = true;
             this.btnRunToEnd.Click += new System.EventHandler(this.btnRunToEnd_Click);
             // 
-<<<<<<< HEAD
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(298, 359);
@@ -560,7 +556,6 @@
             this.button1.Text = "Open Binary File";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-=======
             // label21
             // 
             this.label21.AutoSize = true;
@@ -580,19 +575,15 @@
             this.label22.Size = new System.Drawing.Size(39, 13);
             this.label22.TabIndex = 57;
             this.label22.Text = "Value";
->>>>>>> f73675241c1087692c95fec7c3211eb63063f99d
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 428);
-<<<<<<< HEAD
             this.Controls.Add(this.button1);
-=======
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
->>>>>>> f73675241c1087692c95fec7c3211eb63063f99d
             this.Controls.Add(this.btnRunToEnd);
             this.Controls.Add(this.btnViewMem);
             this.Controls.Add(this.label25);
@@ -701,12 +692,9 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Button btnViewMem;
         private System.Windows.Forms.Button btnRunToEnd;
-<<<<<<< HEAD
         private System.Windows.Forms.Button button1;
-=======
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
->>>>>>> f73675241c1087692c95fec7c3211eb63063f99d
     }
 }
 
