@@ -232,7 +232,7 @@ namespace ISADecoder {
                     registerVals[inst.r1] = (short)(operandVal * registerValue);
                     break;
             }
-            if (inst.r1 >= 0) {
+            if (inst.r1 >= 0 && inst.mnemonic != Mnemonic.ST) {
                 registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
                 registers[inst.r1].BackColor = Color.LightGreen;
             }
