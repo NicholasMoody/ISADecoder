@@ -138,7 +138,7 @@ namespace ISADecoder {
                 tb.BackColor = SystemColors.Control;
             }
 
-            registers[PCreg].Text = ToHexString(PCAddr); // update PC 
+            registers[PCreg].Text = ToHexStringNormal(PCAddr); // update PC 
             registerVals[PCreg] = PCAddr;
 
             PCAddr += inst.instSize; // update PC for next instruction. will be overwritten if branch. 
@@ -148,15 +148,17 @@ namespace ISADecoder {
                 registerValue = registerVals[inst.r1]; // value stored in current instruction's register
 
             short operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
+
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
-                    registerVals[inst.r1] = operandVal;
-                    ViewMemoryAt(inst.op1);
+                    registerVals[inst.r1] = memory[GetMemAddressByAddressingMode(inst)];
+                    ViewMemoryAt(GetMemAddressByAddressingMode(inst));
                     break;
                 case Mnemonic.ST:
-                    memory[operandVal] = (byte)(registerValue >> 8); // most significant byte of value
-                    memory[operandVal + 1] = (byte)(registerValue & 0b11111111); // least significant byte of value
-                    ViewMemoryAt(operandVal);
+                    int loc = GetMemAddressByAddressingMode(inst);
+                    memory[loc] = (byte)(registerValue >> 8); // most significant byte of value
+                    memory[loc + 1] = (byte)(registerValue & 0b11111111); // least significant byte of value
+                    ViewMemoryAt(loc);
                     break;
                 case Mnemonic.MOV:
                     // moves operand into register depending on addressing mode 
@@ -175,7 +177,7 @@ namespace ISADecoder {
                         flag &= 0b1011; // unset zero flag
                     }
                     registerVals[FlagsReg] = flag;
-                    registers[FlagsReg].Text = ToHexString(flag);
+                    registers[FlagsReg].Text = ToHexStringNormal(flag);
                     registers[FlagsReg].BackColor = Color.LightGreen;
                     break;
                 case Mnemonic.B:
@@ -233,7 +235,7 @@ namespace ISADecoder {
                     break;
             }
             if (inst.r1 >= 0 && inst.mnemonic != Mnemonic.ST) {
-                registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
+                registers[inst.r1].Text = ToHexStringNormal(registerVals[inst.r1]);
                 registers[inst.r1].BackColor = Color.LightGreen;
             }
         }
@@ -242,28 +244,49 @@ namespace ISADecoder {
         // fill textbox with memory at address including its 10 neighbors (words, not bytes) 
         // ADDRESS SHOULD BE EVEN, OTHERWISE WEIRD SHIT WILL HAPPEN
         // I AM WARNING YOU 
-        private void ViewMemoryAt(short address) {
+        private void ViewMemoryAt(int address) {
             tbMemViewer.Text = "";
             for (short i = -12; i <= 12; i += 2) {
                 if (address + i >= 0 && address + i < memory.Length) {
-                    tbMemViewer.Text += ToHexString((short)(address + i)) + " | " + ToHexFromMemory(address + i) + Environment.NewLine;
+                    tbMemViewer.Text += ToHexStringMemAddr(address + i) + " | " + ToHexFromMemory(address + i) + Environment.NewLine;
                 }
             }
+        }
+        /// <summary>
+        /// Gets memory address of instruction depending on addressing mode. For example, if second register, then 
+        /// that second register and the register after it will store the memory address. 
+        /// </summary>
+        /// <param name="inst"></param>
+        /// <returns></returns>
+        private int GetMemAddressByAddressingMode(Instruction inst) {
+            if (inst.addressingMode == AddressingMode.MemLoc) {
+                int val = (UInt16)inst.op1 << 8;
+                val += (UInt16)inst.op2;
+                return val;
+            }
+            else if (inst.addressingMode == AddressingMode.SecondRegister) {
+                int val = Convert.ToUInt16(registers[inst.r2].Text, 16) << 4;
+                val += Convert.ToUInt16(registers[inst.r2 + 1].Text, 16);
+                return val;
+            }
+            return 0;
         }
 
         private short GetOperandValByAddressingMode(Instruction inst) {
             short val = 0;
             if (inst.addressingMode == AddressingMode.Immediate)
                 val = inst.op1;
-            else if (inst.addressingMode == AddressingMode.MemLoc)
-                val = memory[inst.op1];
             else if (inst.addressingMode == AddressingMode.SecondRegister)
                 val = HexToInt(registers[inst.r2].Text);
             return val;
         }
 
-        private string ToHexString(short val) {
+        private string ToHexStringNormal(short val) {
             return "0x" + val.ToString("X4");
+        }
+
+        private string ToHexStringMemAddr(int val) {
+            return "0x" + val.ToString("X5");
         }
 
         private string ToHexFromMemory(int address) {

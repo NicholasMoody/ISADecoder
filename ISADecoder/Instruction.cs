@@ -15,7 +15,7 @@ namespace ISADecoder {
         public short r1 = -1;
         public short r2 = -1;
         public short op1 = -1; // operand 1
-        public short op2 = -1; // least significant 4 bits of mem address
+        public short op2 = -1; // least significant byte of mem address
         public short instSize = -1; // instruction size in bytes (including operands). will be used for PC calculations 
         public short address = -1;
 
@@ -29,7 +29,7 @@ namespace ISADecoder {
                 if (addressingMode == AddressingMode.Immediate)
                     output += $", {op1}";
                 else if (addressingMode == AddressingMode.MemLoc)
-                    output += $", 0x{op1:X4}{op2:X1}";
+                    output += $", 0x{op1:X3}{op2:X2}";
                 else if (addressingMode == AddressingMode.SecondRegister)
                     output += $", R{r2}";
                 else if (addressingMode == AddressingMode.None)
@@ -43,7 +43,7 @@ namespace ISADecoder {
                 case AddressingMode.SecondRegister:
                     return $"value in R{r2}";
                 case AddressingMode.MemLoc:
-                    return $"value in 0x{op1:X4}{op2:X1}";
+                    return $"value in 0x{op1:X3}{op2:X2}";
                 case AddressingMode.Immediate:
                     return $"{op1}";
             }

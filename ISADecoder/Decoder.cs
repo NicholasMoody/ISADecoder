@@ -159,6 +159,8 @@ namespace ISADecoder {
                     inst.op1 = operand;
                     loc += 2;
                     // if memory location, we need to pull in one more byte 
+                    // **technically we only need 4 bits, but i would rather saw multiple appendages off with an eraser than 
+                    // actually get that working 
                     if (inst.addressingMode == AddressingMode.MemLoc) {
                         if (loc + 2 >= bytes.Count)
                             throw new Exception("Invalid instruction: cannot fetch operand");
