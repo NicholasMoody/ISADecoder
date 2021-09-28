@@ -158,6 +158,18 @@ namespace ISADecoder {
                     operand += bytes[loc + 3];
                     inst.op1 = operand;
                     loc += 2;
+                    // if memory location, we need to pull in one more byte 
+                    // **technically we only need 4 bits, but i would rather saw multiple appendages off with an eraser than 
+                    // actually get that working 
+                    if (inst.addressingMode == AddressingMode.MemLoc) {
+                        if (loc + 2 >= bytes.Count)
+                            throw new Exception("Invalid instruction: cannot fetch operand");
+                        inst.instSize += 2;
+                        // fetch operand and shove into int 
+                        short op2 = bytes[loc + 2];
+                        inst.op2 = op2;
+                        loc++;
+                    }
                 }
 
                 /*if (inst.addressingMode == AddressingMode.SecondRegister && inst.op1 > 0b1111) {
@@ -178,7 +190,7 @@ namespace ISADecoder {
             input = input.Replace("\n\n", "");
             input = input.Replace(Environment.NewLine, "");
             // parse to binary array 
-            for (int i = 0; i < input.Length; i += 2) {
+            for (int i = 0; i < input.Length; i += 2) {              
                 if (CharToHex(input[i]) == -1 || CharToHex(input[i + 1]) == -1)
                     throw new Exception("Invalid input character/s, please try again.");
                 byte val = (byte)CharToHex(input[i]); // get hex value of first char of byte

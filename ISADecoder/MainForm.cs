@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Windows.Forms;
 namespace ISADecoder {
     public partial class MainForm : Form {
         TextBox[] registers = new TextBox[16];
-        // negative values do wierd shit and do not convert to hex conveniently 
+        // negative values do strange shit and do not convert to hex conveniently 
         // thus, i should stop being stupid and actually keep the values of registers as shorts, not just as fucking text lmao 
         short[] registerVals = new short[16];
         List<Instruction> instructions = new List<Instruction>();
@@ -103,7 +104,12 @@ namespace ISADecoder {
             }
             PCAddr = 0;
             memory = new byte[memSize];
-            short pc = 0;
+            instructions = new List<Instruction>();
+            tbMemViewer.Text = "";
+            tbMemSelection.Text = "";
+            lblStats.Text = "";
+
+            short pc = 0; 
 
             try {
                 Decoder d = new Decoder(tbInput.Text, memory);
@@ -197,7 +203,7 @@ namespace ISADecoder {
                 tb.BackColor = SystemColors.Control;
             }
 
-            registers[PCreg].Text = ToHexString(PCAddr); // update PC 
+            registers[PCreg].Text = ToHexStringNormal(PCAddr); // update PC 
             registerVals[PCreg] = PCAddr;
 
             PCAddr += inst.instSize; // update PC for next instruction. will be overwritten if branch. 
@@ -207,15 +213,20 @@ namespace ISADecoder {
                 registerValue = registerVals[inst.r1]; // value stored in current instruction's register
 
             short operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
+
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
-                    registerVals[inst.r1] = operandVal;
-                    ViewMemoryAt(inst.op1);
+                    registerVals[inst.r1] = memory[GetMemAddressByAddressingMode(inst)];
+                    registerVals[inst.r1] <<= 8;
+                    registerVals[inst.r1] += memory[GetMemAddressByAddressingMode(inst) + 1];
+                    registers[inst.r1].Text = ToHexFromMemory(registerVals[inst.r1]);
+                    ViewMemoryAt(GetMemAddressByAddressingMode(inst));
                     break;
                 case Mnemonic.ST:
-                    memory[operandVal] = (byte)(registerValue >> 8); // most significant byte of value
-                    memory[operandVal + 1] = (byte)(registerValue & 0b11111111); // least significant byte of value
-                    ViewMemoryAt(operandVal);
+                    int loc = GetMemAddressByAddressingMode(inst);
+                    memory[loc] = (byte)(registerValue >> 8); // most significant byte of value
+                    memory[loc + 1] = (byte)(registerValue & 0b11111111); // least significant byte of value
+                    ViewMemoryAt(loc);
                     break;
                 case Mnemonic.MOV:
                     // moves operand into register depending on addressing mode 
@@ -234,7 +245,7 @@ namespace ISADecoder {
                         flag &= 0b1011; // unset zero flag
                     }
                     registerVals[FlagsReg] = flag;
-                    registers[FlagsReg].Text = ToHexString(flag);
+                    registers[FlagsReg].Text = ToHexStringNormal(flag);
                     registers[FlagsReg].BackColor = Color.LightGreen;
                     break;
                 case Mnemonic.B:
@@ -291,8 +302,8 @@ namespace ISADecoder {
                     registerVals[inst.r1] = (short)(operandVal * registerValue);
                     break;
             }
-            if (inst.r1 >= 0) {
-                registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
+            if (inst.r1 >= 0 && inst.mnemonic != Mnemonic.ST) {
+                registers[inst.r1].Text = ToHexStringNormal(registerVals[inst.r1]);
                 registers[inst.r1].BackColor = Color.LightGreen;
             }
         }
@@ -301,28 +312,50 @@ namespace ISADecoder {
         // fill textbox with memory at address including its 10 neighbors (words, not bytes) 
         // ADDRESS SHOULD BE EVEN, OTHERWISE WEIRD SHIT WILL HAPPEN
         // I AM WARNING YOU 
-        private void ViewMemoryAt(short address) {
+        private void ViewMemoryAt(int address) {
             tbMemViewer.Text = "";
+            tbMemSelection.Text = $"0x{address:X5}";
             for (short i = -12; i <= 12; i += 2) {
                 if (address + i >= 0 && address + i < memory.Length) {
-                    tbMemViewer.Text += ToHexString((short)(address + i)) + " | " + ToHexFromMemory(address + i) + Environment.NewLine;
+                    tbMemViewer.Text += ToHexStringMemAddr(address + i) + " | " + ToHexFromMemory(address + i) + Environment.NewLine;
                 }
             }
+        }
+        /// <summary>
+        /// Gets memory address of instruction depending on addressing mode. For example, if second register, then 
+        /// that second register and the register after it will store the memory address. 
+        /// </summary>
+        /// <param name="inst"></param>
+        /// <returns></returns>
+        private int GetMemAddressByAddressingMode(Instruction inst) {
+            if (inst.addressingMode == AddressingMode.MemLoc) {
+                int val = (UInt16)inst.op1 << 8;
+                val += (UInt16)inst.op2;
+                return val;
+            }
+            else if (inst.addressingMode == AddressingMode.SecondRegister) {
+                int val = Convert.ToUInt16(registers[inst.r2].Text, 16) << 4;
+                val += Convert.ToUInt16(registers[inst.r2 + 1].Text, 16);
+                return val;
+            }
+            return 0;
         }
 
         private short GetOperandValByAddressingMode(Instruction inst) {
             short val = 0;
             if (inst.addressingMode == AddressingMode.Immediate)
                 val = inst.op1;
-            else if (inst.addressingMode == AddressingMode.MemLoc)
-                val = memory[inst.op1];
             else if (inst.addressingMode == AddressingMode.SecondRegister)
                 val = HexToInt(registers[inst.r2].Text);
             return val;
         }
 
-        private string ToHexString(short val) {
+        private string ToHexStringNormal(short val) {
             return "0x" + val.ToString("X4");
+        }
+
+        private string ToHexStringMemAddr(int val) {
+            return "0x" + val.ToString("X5");
         }
 
         private string ToHexFromMemory(int address) {
@@ -383,11 +416,11 @@ namespace ISADecoder {
 
         private void btnViewMem_Click(object sender, EventArgs e) {
             try {
-                short address = HexToInt(tbMemSelection.Text);
+                int address = HexToInt(tbMemSelection.Text);
                 ViewMemoryAt(address);
             }
             catch (Exception) {
-                MessageBox.Show("Invalid memory address. Input should be four hex characters.", "Invalid Input",
+                MessageBox.Show("Invalid memory address. Input should be five (or fewer) hex characters.", "Invalid Input", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -398,7 +431,9 @@ namespace ISADecoder {
             }
             Reset();
         }
-
+        /// <summary>
+        /// Resets form state after running/decoding 
+        /// </summary>
         private void Reset() {
             lbOutput.SelectedIndex = 0;
             lbOutput.Enabled = true;
@@ -599,6 +634,38 @@ namespace ISADecoder {
                 streamWriter.Dispose();
                 streamWriter.Close();
             }
+        }
+
+        //GNN - Added file directory to open files.
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+            }
+
+            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
+            tbInput.Text = fileContent;
         }
     }
 }

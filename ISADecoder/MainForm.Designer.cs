@@ -74,6 +74,8 @@
             this.btnRunToEnd = new System.Windows.Forms.Button();
             this.switchModeButton = new System.Windows.Forms.Button();
             this.decoderPanel = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.encoderPanel = new System.Windows.Forms.Panel();
@@ -700,6 +702,15 @@
             this.label22.TabIndex = 57;
             this.label22.Text = "Value";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(298, 359);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(192, 39);
+            this.button1.TabIndex = 56;
+            this.button1.Text = "Open Binary File";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // label21
             // 
             this.label21.AutoSize = true;
@@ -948,6 +959,7 @@
             this.Controls.Add(this.switchModeButton);
             this.Controls.Add(this.encoderPanel);
             this.Controls.Add(this.decoderPanel);
+            this.Controls.Add(this.button1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1016,6 +1028,7 @@
         private System.Windows.Forms.Button switchModeButton;
         private System.Windows.Forms.Panel decoderPanel;
         private System.Windows.Forms.Panel encoderPanel;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.NumericUpDown operandNumericUpDown;
