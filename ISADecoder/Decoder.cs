@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -13,8 +14,8 @@ namespace ISADecoder {
         public List<Instruction> instructions = new List<Instruction>();
         public List<byte> binInput = new List<byte>(); // string input parsed to bytes then interpreted via bitwise operations as per requirements
     
-        public Decoder(string input) {
-            ParseToBinary(input, binInput);
+        public Decoder(string input, byte[] memory) {
+            ParseToBinary(input, binInput, memory);
             BinaryToInstructions(binInput);
         }
         
@@ -142,8 +143,12 @@ namespace ISADecoder {
                     default:
                         throw new Exception("Invalid instruction specifier");
                 }
+
+                if (inst.addressingMode == AddressingMode.SecondRegister) {
+                    inst.r2 = r2;
+                }
                 // all instructions other than STOP require an operand
-                if (inst.mnemonic != Mnemonic.STOP) {
+                if (inst.mnemonic != Mnemonic.STOP && inst.addressingMode != AddressingMode.SecondRegister) {
                     if (loc + 3 >= bytes.Count)
                         throw new Exception("Invalid instruction: cannot fetch operand");
                     inst.instSize += 2;
@@ -155,11 +160,11 @@ namespace ISADecoder {
                     loc += 2;
                 }
 
-                if (inst.addressingMode == AddressingMode.SecondRegister && inst.op1 > 0b1111) {
+                /*if (inst.addressingMode == AddressingMode.SecondRegister && inst.op1 > 0b1111) {
                     string message = $"Invalid instruction for: {inst.ToString()}" + Environment.NewLine;
                     message += $"Cannot access register 0x{inst.op1:X4} on 16 register ISA (addressing mode: second register).";
                     throw new Exception(message);
-                }
+                }*/
 
                 if (inst.addressingMode == AddressingMode.Invalid)
                     throw new Exception($"Invalid addressing mode for instruction {inst} (0x{msb:X2}{lsb:X2})");
@@ -168,7 +173,7 @@ namespace ISADecoder {
             } while (!(msb == 0 && lsb == 0)); // loop until stop instruction (or we fail out for invalid input)
         }
 
-        private void ParseToBinary(string input, List<byte> output) {
+        private void ParseToBinary(string input, List<byte> output, byte[] memory) {
             input = input.Replace(" ", "");
             input = input.Replace("\n\n", "");
             input = input.Replace(Environment.NewLine, "");
@@ -180,6 +185,9 @@ namespace ISADecoder {
                 val <<= 4; // shift bits to left of byte
                 val += (byte)CharToHex(input[i + 1]); // fill up 4 least significant bits of byte 
                 binInput.Add(val);
+            }
+            for (int i = 0; i < binInput.Count; i++) {
+                memory[i] = binInput[i];
             }
         }
 

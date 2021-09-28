@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.IO;
+=======
+using System.Drawing;
+>>>>>>> f73675241c1087692c95fec7c3211eb63063f99d
 using System.Linq;
 using System.Windows.Forms;
 
 namespace ISADecoder {
     public partial class MainForm : Form {
         TextBox[] registers = new TextBox[16];
+        // negative values do wierd shit and do not convert to hex conveniently 
+        // thus, i should stop being stupid and actually keep the values of registers as shorts, not just as fucking text lmao 
+        short[] registerVals = new short[16];
         List<Instruction> instructions = new List<Instruction>();
-        byte[] memory = new byte[1048576]; // stores memory of program for simulation 
+        int memSize = 1048576;
+        byte[] memory; // stores memory of program for simulation 
         bool done = false;
         short PCAddr = 0; // internal PC count so that register text can easily be updated at right time 
         int PCreg = 14;
@@ -30,11 +38,19 @@ namespace ISADecoder {
         }
 
         private void btnDecode_Click(object sender, EventArgs e) {
+            // reset things 
             lbOutput.Items.Clear();
             tbInstructionDescription.Text = "";
+            registerVals = new short[16];
+            foreach (TextBox tb in registers) {
+                tb.Text = "0x0000";
+            }
+            PCAddr = 0;
+            memory = new byte[memSize];
             short pc = 0; 
+
             try {
-                Decoder d = new Decoder(tbInput.Text);
+                Decoder d = new Decoder(tbInput.Text, memory);
 
                 foreach (Instruction i in d.instructions) {
                     lbOutput.Items.Add("0x" + pc.ToString("X4") + " | " + i.ToString());
@@ -120,18 +136,24 @@ namespace ISADecoder {
                     break;
                 }
             }
+            //reset register colors
+            foreach (TextBox tb in registers) {
+                tb.BackColor = SystemColors.Control;
+            }
 
             registers[PCreg].Text = ToHexString(PCAddr); // update PC 
+            registerVals[PCreg] = PCAddr;
 
             PCAddr += inst.instSize; // update PC for next instruction. will be overwritten if branch. 
 
             short registerValue = 0;
             if (inst.r1 >= 0) 
-                registerValue = Convert.ToInt16(registers[inst.r1].Text, 16); // value stored in current instruction's register
+                registerValue = registerVals[inst.r1]; // value stored in current instruction's register
+
             short operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
             switch (inst.mnemonic) {
                 case Mnemonic.LD:
-                    registers[inst.r1].Text = ToHexString(operandVal); // load value in memory address to register
+                    registerVals[inst.r1] = operandVal;
                     ViewMemoryAt(inst.op1);
                     break;
                 case Mnemonic.ST:
@@ -141,11 +163,11 @@ namespace ISADecoder {
                     break;
                 case Mnemonic.MOV:
                     // moves operand into register depending on addressing mode 
-                    registers[inst.r1].Text = ToHexString(operandVal);
+                    registerVals[inst.r1] = operandVal;
                     break;
                 case Mnemonic.COM:
                     // subtracts operand value from register value and sets flags
-                    int comp = HexToInt(registers[inst.r1].Text) - operandVal;
+                    int comp = registerVals[inst.r1] - operandVal;
                     short flag = 0;
                     if (comp == 0) {  
                         flag |= 0b100; // sets zero flag
@@ -155,7 +177,9 @@ namespace ISADecoder {
                         flag |= 0b1000; // sets negative flag
                         flag &= 0b1011; // unset zero flag
                     }
-                    registers[15].Text = ToHexString(flag);
+                    registerVals[FlagsReg] = flag;
+                    registers[FlagsReg].Text = ToHexString(flag);
+                    registers[FlagsReg].BackColor = Color.LightGreen;
                     break;
                 case Mnemonic.B:
                     PCAddr = inst.op1;
@@ -188,30 +212,35 @@ namespace ISADecoder {
                     done = true;
                     break;
                 case Mnemonic.ADD:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue + operandVal));
+                    registerVals[inst.r1] = (short)(registerValue + operandVal);
                     break;
                 case Mnemonic.SUB:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue - operandVal));
+                    registerVals[inst.r1] = (short)(registerValue - operandVal);
                     break;
                 // NOTE: all arithmetic and logical shifts do the same thing here
                 // either change how ints are handled or remove one type of shift (easier)
                 case Mnemonic.ASL:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue << operandVal));
+                    registerVals[inst.r1] = (short)(registerValue << operandVal);
                     break;
                 case Mnemonic.LSR:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue >> operandVal));
+                    registerVals[inst.r1] = (short)(registerValue >> operandVal);
                     break;
                 case Mnemonic.ASR:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue >> operandVal));
+                    registerVals[inst.r1] = (short)(registerValue >> operandVal);
                     break;
                 case Mnemonic.LSL:
-                    registers[inst.r1].Text = ToHexString((short)(registerValue << operandVal));
+                    registerVals[inst.r1] = (short)(registerValue << operandVal);
                     break;
                 case Mnemonic.MULT:
-                    registers[inst.r1].Text = ToHexString((short)(operandVal * registerValue));
+                    registerVals[inst.r1] = (short)(operandVal * registerValue);
                     break;
             }
+            if (inst.r1 >= 0) {
+                registers[inst.r1].Text = ToHexString(registerVals[inst.r1]);
+                registers[inst.r1].BackColor = Color.LightGreen;
+            }
         }
+
 
         // fill textbox with memory at address including its 10 neighbors (words, not bytes) 
         // ADDRESS SHOULD BE EVEN, OTHERWISE WEIRD SHIT WILL HAPPEN
@@ -232,7 +261,7 @@ namespace ISADecoder {
             else if (inst.addressingMode == AddressingMode.MemLoc)
                 val = memory[inst.op1];
             else if (inst.addressingMode == AddressingMode.SecondRegister)
-                val = Convert.ToInt16(registers[inst.op1].Text, 16);
+                val = HexToInt(registers[inst.r2].Text);
             return val;
         }
 

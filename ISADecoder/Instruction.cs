@@ -25,13 +25,13 @@ namespace ISADecoder {
             if (r1 != -1) {
                 output += $" R{r1}"; 
             }
-            if (op1 != -1) {
+            if (op1 != -1 || addressingMode == AddressingMode.SecondRegister) {
                 if (addressingMode == AddressingMode.Immediate)
                     output += $", {op1}";
                 else if (addressingMode == AddressingMode.MemLoc)
                     output += $", 0x{op1:X4}";
                 else if (addressingMode == AddressingMode.SecondRegister)
-                    output += $", R{op1}";
+                    output += $", R{r2}";
                 else if (addressingMode == AddressingMode.None)
                     output += $", 0x{op1:X4}";
             }
@@ -41,7 +41,7 @@ namespace ISADecoder {
         private string GetOperandFormatting() {
             switch (addressingMode) {
                 case AddressingMode.SecondRegister:
-                    return $"value in R{op1}";
+                    return $"value in R{r2}";
                 case AddressingMode.MemLoc:
                     return $"value in 0x{op1:X4}";
                 case AddressingMode.Immediate:
