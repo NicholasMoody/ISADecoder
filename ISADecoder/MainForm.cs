@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -22,16 +23,75 @@ namespace ISADecoder {
         public MainForm() {
             InitializeComponent();
             // build register array
-            int rCount = 0;
+            //int rCount = 0;
 
-            foreach (TextBox t in this.Controls.OfType<TextBox>()) {
+            foreach (TextBox t in this.decoderPanel.Controls.OfType<TextBox>()) {
+
+                if (t.Name.StartsWith("tbR"))
+                    t.Text = "0x0000";
+
+                switch (t.Name)
+                {
+                    case ("tbR0"):
+                        registers[0] = t;
+                        break;
+                    case ("tbR1"):
+                        registers[1] = t;
+                        break;
+                    case ("tbR2"):
+                        registers[2] = t;
+                        break;
+                    case ("tbR3"):
+                        registers[3] = t;
+                        break;
+                    case ("tbR4"):
+                        registers[4] = t;
+                        break;
+                    case ("tbR5"):
+                        registers[5] = t;
+                        break;
+                    case ("tbR6"):
+                        registers[6] = t;
+                        break;
+                    case ("tbR7"):
+                        registers[7] = t;
+                        break;
+                    case ("tbR8"):
+                        registers[8] = t;
+                        break;
+                    case ("tbR9"):
+                        registers[9] = t;
+                        break;
+                    case ("tbR10"):
+                        registers[10] = t;
+                        break;
+                    case ("tbR11"):
+                        registers[11] = t;
+                        break;
+                    case ("tbR12"):
+                        registers[12] = t;
+                        break;
+                    case ("tbR13"):
+                        registers[13] = t;
+                        break;
+                    case ("tbR14"):
+                        registers[14] = t;
+                        break;
+                    case ("tbR15"):
+                        registers[15] = t;
+                        break;
+                    default:
+                        break;
+                }
+                /*
                 if (t.Name.StartsWith("tbR")) {
                     t.Text = "0x0000";
                     registers[rCount] = t;
                     rCount++;
                 } 
+                */
             }
-            Array.Reverse(registers);
+            //Array.Reverse(registers);
         }
 
         private void btnDecode_Click(object sender, EventArgs e) {
@@ -65,7 +125,7 @@ namespace ISADecoder {
                 instructions = d.instructions;
             }
             catch (ArgumentOutOfRangeException) {
-                MessageBox.Show("Program must end with the STOP instruction (0x0000).", "Error", 
+                MessageBox.Show("Program must end with the STOP instruction (0x0000).", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex) {
@@ -149,7 +209,7 @@ namespace ISADecoder {
             PCAddr += inst.instSize; // update PC for next instruction. will be overwritten if branch. 
 
             short registerValue = 0;
-            if (inst.r1 >= 0) 
+            if (inst.r1 >= 0)
                 registerValue = registerVals[inst.r1]; // value stored in current instruction's register
 
             short operandVal = GetOperandValByAddressingMode(inst); // may not be used for given instruction, doesn't matter
@@ -176,7 +236,7 @@ namespace ISADecoder {
                     // subtracts operand value from register value and sets flags
                     int comp = registerVals[inst.r1] - operandVal;
                     short flag = 0;
-                    if (comp == 0) {  
+                    if (comp == 0) {
                         flag |= 0b100; // sets zero flag
                         flag &= 0b0111; // unsets negative flag
                     }
@@ -302,7 +362,7 @@ namespace ISADecoder {
             if (address < 0 || address >= memory.Length)
                 return "n/a";
             // last byte, can't form word 
-            if (address == memory.Length - 1) 
+            if (address == memory.Length - 1)
                 return $"0x{memory[address]:X2}";
 
             return $"0x{memory[address]:X2}{memory[address + 1]:X2}";
@@ -382,6 +442,198 @@ namespace ISADecoder {
             btnDecode.Enabled = true;
             registers[PCreg].Text = "0x0000"; // reset PC 
             btnRunToEnd.Enabled = false;
+        }
+
+        private void switchModeButton_Click(object sender, EventArgs e)
+        {
+            if (decoderPanel.Visible)
+            {
+                decoderPanel.Visible = false;
+                encoderPanel.Visible = true;
+                switchModeButton.Text = "Swap to Decoder";
+            }
+            else
+            {
+                decoderPanel.Visible = true;
+                encoderPanel.Visible = false;
+                switchModeButton.Text = "Swap to Encoder";
+            }
+        }
+
+        private void instructionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (instructionComboBox.Text)
+            {
+                case "LD":
+                case "ST":
+                    operandTypeComboBox.Items.Clear();
+                    operandTypeComboBox.Items.Add("Memory");
+                    operandTypeComboBox.SelectedItem = "Memory";
+                    operandTypeComboBox.Enabled = false;
+                    operandNumericUpDown.Enabled = true;
+                    operandTypeLabel.Visible = true;
+                    operandLabel.Visible = true;
+                    register1Label.Visible = true;
+                    Register1NumericUpDown.Enabled = true;
+                    break;
+                case "B":
+                case "BL":
+                case "BLE":
+                case "BG":
+                case "BGE":
+                case "BE":
+                case "BNE":
+                    operandTypeComboBox.Items.Clear();
+                    operandTypeComboBox.Items.Add("Memory");
+                    operandTypeComboBox.SelectedItem = "Memory";
+                    operandTypeComboBox.Enabled = false;
+                    operandNumericUpDown.Enabled = true;
+                    operandTypeLabel.Visible = true;
+                    operandLabel.Visible = true;
+                    register1Label.Visible = false;
+                    Register1NumericUpDown.Enabled = false;
+                    break;
+                case "ADD":
+                case "SUB":
+                case "ASL":
+                case "LSL":
+                case "ASR":
+                case "LSR":
+                case "MULT":
+                case "MOV":
+                case "COM":
+                    operandTypeComboBox.Items.Clear();
+                    operandTypeComboBox.Items.Add("Register");
+                    operandTypeComboBox.Items.Add("Immediate");
+                    operandTypeComboBox.Items.Add("Memory");
+                    operandTypeComboBox.Enabled = true;
+                    operandNumericUpDown.Enabled = true;
+                    operandTypeLabel.Visible = true;
+                    operandLabel.Visible = true;
+                    register1Label.Visible = true;
+                    Register1NumericUpDown.Enabled = true;
+                    break;
+                case "STOP":
+                    operandTypeComboBox.Items.Clear();
+                    operandTypeComboBox.Enabled = false;
+                    operandNumericUpDown.Enabled = false;
+                    operandTypeLabel.Visible = false;
+                    operandLabel.Visible = false;
+                    register1Label.Visible = false;
+                    Register1NumericUpDown.Enabled = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void operandTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (operandTypeComboBox.Text == "Register")
+            {
+                operandLabel.Text = "Register 2";
+                operandNumericUpDown.Maximum = 0xD;
+                operandNumericUpDown.Minimum = 0;
+            }
+            else if (operandTypeComboBox.Text == "Immediate")
+            {
+                operandLabel.Text = "Immediate Value";
+                operandNumericUpDown.Maximum = 0xFFFF;
+                operandNumericUpDown.Minimum = 0;
+            }
+            if (operandTypeComboBox.Text == "Memory")
+            {
+                operandLabel.Text = "Memory Address";
+                operandNumericUpDown.Maximum = 0xFFFFF;
+                operandNumericUpDown.Minimum = 0;
+            }
+        }
+
+        private void addInstructionButton_Click(object sender, EventArgs e)
+        {
+            string instruction = instructionComboBox.Text;
+            //No instruction selected, do nothing
+            if (instruction == "")
+                return;
+
+            if (instruction == "STOP")
+            {
+                instructionListListBox.Items.Add("STOP");
+                return;
+            }
+            else if (instruction == "LD" || instruction == "ST")
+            {
+                instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", 0x" + Convert.ToInt32(operandNumericUpDown.Value).ToString("X5"));
+                return;
+            }
+            else if (instruction == "B" || instruction == "BL" || instruction == "BLE" || instruction == "BG"
+                    || instruction == "BGE" || instruction == "BE" || instruction == "BNE")
+            {
+                instructionListListBox.Items.Add(instruction + " 0x" + Convert.ToInt32(operandNumericUpDown.Value).ToString("X5"));
+                return;
+            }
+            else if (instruction == "MOV" || instruction == "COM" || instruction == "ADD" || instruction == "SUB" || instruction == "ASL"
+                    || instruction == "ASR" || instruction == "LSL" || instruction == "LSR" || instruction == "MULT")
+            {
+                //Second operand type not set, do nothing
+                if(operandTypeComboBox.Text == "")
+                    return;
+
+                if (operandTypeComboBox.Text == "Register")
+                {
+                    instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", R" + Convert.ToInt32(operandNumericUpDown.Value).ToString("x"));
+                    return;
+                }
+                else if (operandTypeComboBox.Text == "Immediate")
+                {
+                    instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", " + Convert.ToInt32(operandNumericUpDown.Value).ToString("X4"));
+                    return;
+                }
+                else if (operandTypeComboBox.Text == "Memory")
+                {
+                    instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", 0x" + Convert.ToInt32(operandNumericUpDown.Value).ToString("X5"));
+                    return;
+                }
+            }
+            return;
+        }
+
+        private void removeInstructionButton_Click(object sender, EventArgs e)
+        {
+            //No instruction selected, do nothing
+            if(instructionListListBox.SelectedIndex < 0)
+            {
+                return;
+            }
+            else
+                instructionListListBox.Items.Remove(instructionListListBox.SelectedItem);
+
+            return;
+        }
+
+        private void translateInstructionsButton_Click(object sender, EventArgs e)
+        {
+            hexadecimalTextBox.Text = "";
+            foreach(string instruction in instructionListListBox.Items)
+            {
+                hexadecimalTextBox.Text += Encoder.InstrToHex(instruction) + " ";
+            }    
+        }
+
+        private void saveCodeButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = "Save Hex Code";
+            saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.FileName != "")
+            {
+                StreamWriter streamWriter = new StreamWriter(saveFileDialog.OpenFile());
+                for (int i = 0; i < hexadecimalTextBox.Text.Length; i++)
+                    streamWriter.Write(hexadecimalTextBox.Text[i]);
+                streamWriter.Dispose();
+                streamWriter.Close();
+            }
         }
 
         //GNN - Added file directory to open files.
