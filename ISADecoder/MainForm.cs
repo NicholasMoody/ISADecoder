@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -527,13 +528,13 @@ namespace ISADecoder {
             }
             else if (instruction == "LD" || instruction == "ST")
             {
-                instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", 0x" + Convert.ToInt32(operandNumericUpDown.Value).ToString("X"));
+                instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", 0x" + Convert.ToInt32(operandNumericUpDown.Value).ToString("X5"));
                 return;
             }
             else if (instruction == "B" || instruction == "BL" || instruction == "BLE" || instruction == "BG"
                     || instruction == "BGE" || instruction == "BE" || instruction == "BNE")
             {
-                instructionListListBox.Items.Add(instruction + " 0x" + Convert.ToInt32(operandNumericUpDown.Value).ToString("X"));
+                instructionListListBox.Items.Add(instruction + " 0x" + Convert.ToInt32(operandNumericUpDown.Value).ToString("X5"));
                 return;
             }
             else if (instruction == "MOV" || instruction == "COM" || instruction == "ADD" || instruction == "SUB" || instruction == "ASL"
@@ -550,12 +551,12 @@ namespace ISADecoder {
                 }
                 else if (operandTypeComboBox.Text == "Immediate")
                 {
-                    instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", " + Convert.ToInt32(operandNumericUpDown.Value).ToString("X"));
+                    instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", " + Convert.ToInt32(operandNumericUpDown.Value).ToString("X4"));
                     return;
                 }
                 else if (operandTypeComboBox.Text == "Memory")
                 {
-                    instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", 0x" + Convert.ToInt32(operandNumericUpDown.Value).ToString("X"));
+                    instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", 0x" + Convert.ToInt32(operandNumericUpDown.Value).ToString("X5"));
                     return;
                 }
             }
@@ -573,6 +574,31 @@ namespace ISADecoder {
                 instructionListListBox.Items.Remove(instructionListListBox.SelectedItem);
 
             return;
+        }
+
+        private void translateInstructionsButton_Click(object sender, EventArgs e)
+        {
+            hexadecimalTextBox.Text = "";
+            foreach(string instruction in instructionListListBox.Items)
+            {
+                hexadecimalTextBox.Text += Encoder.InstrToHex(instruction) + " ";
+            }    
+        }
+
+        private void saveCodeButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = "Save Hex Code";
+            saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.FileName != "")
+            {
+                StreamWriter streamWriter = new StreamWriter(saveFileDialog.OpenFile());
+                for (int i = 0; i < hexadecimalTextBox.Text.Length; i++)
+                    streamWriter.Write(hexadecimalTextBox.Text[i]);
+                streamWriter.Dispose();
+                streamWriter.Close();
+            }
         }
     }
 }

@@ -80,7 +80,7 @@
             this.saveCodeButton = new System.Windows.Forms.Button();
             this.translateInstructionsButton = new System.Windows.Forms.Button();
             this.removeInstructionButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.hexadecimalTextBox = new System.Windows.Forms.TextBox();
             this.instructionListListBox = new System.Windows.Forms.ListBox();
             this.hexCodeLabel = new System.Windows.Forms.Label();
             this.instructionListLabel = new System.Windows.Forms.Label();
@@ -102,7 +102,7 @@
             // tbR0
             // 
             this.tbR0.Location = new System.Drawing.Point(37, 7);
-            this.tbR0.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR0.Margin = new System.Windows.Forms.Padding(4);
             this.tbR0.Name = "tbR0";
             this.tbR0.ReadOnly = true;
             this.tbR0.Size = new System.Drawing.Size(75, 22);
@@ -134,7 +134,7 @@
             // tbR1
             // 
             this.tbR1.Location = new System.Drawing.Point(37, 39);
-            this.tbR1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR1.Margin = new System.Windows.Forms.Padding(4);
             this.tbR1.Name = "tbR1";
             this.tbR1.ReadOnly = true;
             this.tbR1.Size = new System.Drawing.Size(75, 22);
@@ -155,7 +155,7 @@
             // tbR2
             // 
             this.tbR2.Location = new System.Drawing.Point(37, 71);
-            this.tbR2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR2.Margin = new System.Windows.Forms.Padding(4);
             this.tbR2.Name = "tbR2";
             this.tbR2.ReadOnly = true;
             this.tbR2.Size = new System.Drawing.Size(75, 22);
@@ -176,7 +176,7 @@
             // tbR3
             // 
             this.tbR3.Location = new System.Drawing.Point(37, 103);
-            this.tbR3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR3.Margin = new System.Windows.Forms.Padding(4);
             this.tbR3.Name = "tbR3";
             this.tbR3.ReadOnly = true;
             this.tbR3.Size = new System.Drawing.Size(75, 22);
@@ -197,7 +197,7 @@
             // tbR4
             // 
             this.tbR4.Location = new System.Drawing.Point(37, 135);
-            this.tbR4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR4.Margin = new System.Windows.Forms.Padding(4);
             this.tbR4.Name = "tbR4";
             this.tbR4.ReadOnly = true;
             this.tbR4.Size = new System.Drawing.Size(75, 22);
@@ -218,7 +218,7 @@
             // tbR5
             // 
             this.tbR5.Location = new System.Drawing.Point(37, 167);
-            this.tbR5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR5.Margin = new System.Windows.Forms.Padding(4);
             this.tbR5.Name = "tbR5";
             this.tbR5.ReadOnly = true;
             this.tbR5.Size = new System.Drawing.Size(75, 22);
@@ -239,7 +239,7 @@
             // tbR6
             // 
             this.tbR6.Location = new System.Drawing.Point(37, 199);
-            this.tbR6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR6.Margin = new System.Windows.Forms.Padding(4);
             this.tbR6.Name = "tbR6";
             this.tbR6.ReadOnly = true;
             this.tbR6.Size = new System.Drawing.Size(75, 22);
@@ -260,7 +260,7 @@
             // tbR7
             // 
             this.tbR7.Location = new System.Drawing.Point(37, 231);
-            this.tbR7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR7.Margin = new System.Windows.Forms.Padding(4);
             this.tbR7.Name = "tbR7";
             this.tbR7.ReadOnly = true;
             this.tbR7.Size = new System.Drawing.Size(75, 22);
@@ -281,7 +281,7 @@
             // tbR8
             // 
             this.tbR8.Location = new System.Drawing.Point(37, 263);
-            this.tbR8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR8.Margin = new System.Windows.Forms.Padding(4);
             this.tbR8.Name = "tbR8";
             this.tbR8.ReadOnly = true;
             this.tbR8.Size = new System.Drawing.Size(75, 22);
@@ -302,7 +302,7 @@
             // tbR9
             // 
             this.tbR9.Location = new System.Drawing.Point(37, 295);
-            this.tbR9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR9.Margin = new System.Windows.Forms.Padding(4);
             this.tbR9.Name = "tbR9";
             this.tbR9.ReadOnly = true;
             this.tbR9.Size = new System.Drawing.Size(75, 22);
@@ -323,7 +323,7 @@
             // tbR10
             // 
             this.tbR10.Location = new System.Drawing.Point(37, 327);
-            this.tbR10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR10.Margin = new System.Windows.Forms.Padding(4);
             this.tbR10.Name = "tbR10";
             this.tbR10.ReadOnly = true;
             this.tbR10.Size = new System.Drawing.Size(75, 22);
@@ -344,7 +344,7 @@
             // tbR11
             // 
             this.tbR11.Location = new System.Drawing.Point(37, 359);
-            this.tbR11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR11.Margin = new System.Windows.Forms.Padding(4);
             this.tbR11.Name = "tbR11";
             this.tbR11.ReadOnly = true;
             this.tbR11.Size = new System.Drawing.Size(75, 22);
@@ -365,7 +365,7 @@
             // tbR12
             // 
             this.tbR12.Location = new System.Drawing.Point(37, 391);
-            this.tbR12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR12.Margin = new System.Windows.Forms.Padding(4);
             this.tbR12.Name = "tbR12";
             this.tbR12.ReadOnly = true;
             this.tbR12.Size = new System.Drawing.Size(75, 22);
@@ -386,7 +386,7 @@
             // tbR13
             // 
             this.tbR13.Location = new System.Drawing.Point(37, 423);
-            this.tbR13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR13.Margin = new System.Windows.Forms.Padding(4);
             this.tbR13.Name = "tbR13";
             this.tbR13.ReadOnly = true;
             this.tbR13.Size = new System.Drawing.Size(75, 22);
@@ -407,7 +407,7 @@
             // tbR14
             // 
             this.tbR14.Location = new System.Drawing.Point(37, 455);
-            this.tbR14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR14.Margin = new System.Windows.Forms.Padding(4);
             this.tbR14.Name = "tbR14";
             this.tbR14.ReadOnly = true;
             this.tbR14.Size = new System.Drawing.Size(75, 22);
@@ -428,7 +428,7 @@
             // tbR15
             // 
             this.tbR15.Location = new System.Drawing.Point(37, 487);
-            this.tbR15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbR15.Margin = new System.Windows.Forms.Padding(4);
             this.tbR15.Name = "tbR15";
             this.tbR15.ReadOnly = true;
             this.tbR15.Size = new System.Drawing.Size(75, 22);
@@ -438,7 +438,7 @@
             // tbInput
             // 
             this.tbInput.Location = new System.Drawing.Point(297, 31);
-            this.tbInput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbInput.Margin = new System.Windows.Forms.Padding(4);
             this.tbInput.Multiline = true;
             this.tbInput.Name = "tbInput";
             this.tbInput.Size = new System.Drawing.Size(417, 184);
@@ -450,7 +450,7 @@
             this.lbOutput.FormattingEnabled = true;
             this.lbOutput.ItemHeight = 17;
             this.lbOutput.Location = new System.Drawing.Point(724, 31);
-            this.lbOutput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbOutput.Margin = new System.Windows.Forms.Padding(4);
             this.lbOutput.Name = "lbOutput";
             this.lbOutput.Size = new System.Drawing.Size(317, 378);
             this.lbOutput.TabIndex = 33;
@@ -459,7 +459,7 @@
             // btnDecode
             // 
             this.btnDecode.Location = new System.Drawing.Point(297, 223);
-            this.btnDecode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDecode.Margin = new System.Windows.Forms.Padding(4);
             this.btnDecode.Name = "btnDecode";
             this.btnDecode.Size = new System.Drawing.Size(419, 48);
             this.btnDecode.TabIndex = 34;
@@ -480,7 +480,7 @@
             // 
             this.tbInstructionDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbInstructionDescription.Location = new System.Drawing.Point(724, 449);
-            this.tbInstructionDescription.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbInstructionDescription.Margin = new System.Windows.Forms.Padding(4);
             this.tbInstructionDescription.Multiline = true;
             this.tbInstructionDescription.Name = "tbInstructionDescription";
             this.tbInstructionDescription.ReadOnly = true;
@@ -523,7 +523,7 @@
             // btnRun
             // 
             this.btnRun.Location = new System.Drawing.Point(297, 278);
-            this.btnRun.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRun.Margin = new System.Windows.Forms.Padding(4);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(209, 50);
             this.btnRun.TabIndex = 41;
@@ -535,7 +535,7 @@
             // 
             this.btnStep.Enabled = false;
             this.btnStep.Location = new System.Drawing.Point(507, 278);
-            this.btnStep.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStep.Margin = new System.Windows.Forms.Padding(4);
             this.btnStep.Name = "btnStep";
             this.btnStep.Size = new System.Drawing.Size(209, 50);
             this.btnStep.TabIndex = 42;
@@ -558,7 +558,7 @@
             // 
             this.tbMemViewer.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbMemViewer.Location = new System.Drawing.Point(121, 263);
-            this.tbMemViewer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbMemViewer.Margin = new System.Windows.Forms.Padding(4);
             this.tbMemViewer.Multiline = true;
             this.tbMemViewer.Name = "tbMemViewer";
             this.tbMemViewer.ReadOnly = true;
@@ -568,7 +568,7 @@
             // tbMemSelection
             // 
             this.tbMemSelection.Location = new System.Drawing.Point(320, 354);
-            this.tbMemSelection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbMemSelection.Margin = new System.Windows.Forms.Padding(4);
             this.tbMemSelection.Name = "tbMemSelection";
             this.tbMemSelection.Size = new System.Drawing.Size(67, 22);
             this.tbMemSelection.TabIndex = 51;
@@ -598,7 +598,7 @@
             // btnViewMem
             // 
             this.btnViewMem.Location = new System.Drawing.Point(320, 382);
-            this.btnViewMem.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnViewMem.Margin = new System.Windows.Forms.Padding(4);
             this.btnViewMem.Name = "btnViewMem";
             this.btnViewMem.Size = new System.Drawing.Size(68, 28);
             this.btnViewMem.TabIndex = 54;
@@ -610,7 +610,7 @@
             // 
             this.btnRunToEnd.Enabled = false;
             this.btnRunToEnd.Location = new System.Drawing.Point(507, 336);
-            this.btnRunToEnd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRunToEnd.Margin = new System.Windows.Forms.Padding(4);
             this.btnRunToEnd.Name = "btnRunToEnd";
             this.btnRunToEnd.Size = new System.Drawing.Size(209, 48);
             this.btnRunToEnd.TabIndex = 55;
@@ -622,7 +622,7 @@
             // 
             this.switchModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.switchModeButton.Location = new System.Drawing.Point(305, 458);
-            this.switchModeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.switchModeButton.Margin = new System.Windows.Forms.Padding(4);
             this.switchModeButton.Name = "switchModeButton";
             this.switchModeButton.Size = new System.Drawing.Size(419, 62);
             this.switchModeButton.TabIndex = 56;
@@ -684,7 +684,7 @@
             this.decoderPanel.Controls.Add(this.label12);
             this.decoderPanel.Controls.Add(this.tbR12);
             this.decoderPanel.Location = new System.Drawing.Point(8, 7);
-            this.decoderPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.decoderPanel.Margin = new System.Windows.Forms.Padding(4);
             this.decoderPanel.Name = "decoderPanel";
             this.decoderPanel.Size = new System.Drawing.Size(1043, 512);
             this.decoderPanel.TabIndex = 57;
@@ -716,7 +716,7 @@
             this.encoderPanel.Controls.Add(this.saveCodeButton);
             this.encoderPanel.Controls.Add(this.translateInstructionsButton);
             this.encoderPanel.Controls.Add(this.removeInstructionButton);
-            this.encoderPanel.Controls.Add(this.textBox1);
+            this.encoderPanel.Controls.Add(this.hexadecimalTextBox);
             this.encoderPanel.Controls.Add(this.instructionListListBox);
             this.encoderPanel.Controls.Add(this.hexCodeLabel);
             this.encoderPanel.Controls.Add(this.instructionListLabel);
@@ -730,7 +730,7 @@
             this.encoderPanel.Controls.Add(this.operandTypeComboBox);
             this.encoderPanel.Controls.Add(this.instructionComboBox);
             this.encoderPanel.Location = new System.Drawing.Point(8, 7);
-            this.encoderPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.encoderPanel.Margin = new System.Windows.Forms.Padding(4);
             this.encoderPanel.Name = "encoderPanel";
             this.encoderPanel.Size = new System.Drawing.Size(1043, 512);
             this.encoderPanel.TabIndex = 58;
@@ -739,27 +739,29 @@
             // saveCodeButton
             // 
             this.saveCodeButton.Location = new System.Drawing.Point(396, 354);
-            this.saveCodeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.saveCodeButton.Margin = new System.Windows.Forms.Padding(4);
             this.saveCodeButton.Name = "saveCodeButton";
             this.saveCodeButton.Size = new System.Drawing.Size(255, 79);
             this.saveCodeButton.TabIndex = 15;
             this.saveCodeButton.Text = "Save Code";
             this.saveCodeButton.UseVisualStyleBackColor = true;
+            this.saveCodeButton.Click += new System.EventHandler(this.saveCodeButton_Click);
             // 
             // translateInstructionsButton
             // 
             this.translateInstructionsButton.Location = new System.Drawing.Point(396, 263);
-            this.translateInstructionsButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.translateInstructionsButton.Margin = new System.Windows.Forms.Padding(4);
             this.translateInstructionsButton.Name = "translateInstructionsButton";
             this.translateInstructionsButton.Size = new System.Drawing.Size(255, 79);
             this.translateInstructionsButton.TabIndex = 14;
             this.translateInstructionsButton.Text = "Translate Instructions";
             this.translateInstructionsButton.UseVisualStyleBackColor = true;
+            this.translateInstructionsButton.Click += new System.EventHandler(this.translateInstructionsButton_Click);
             // 
             // removeInstructionButton
             // 
             this.removeInstructionButton.Location = new System.Drawing.Point(396, 172);
-            this.removeInstructionButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.removeInstructionButton.Margin = new System.Windows.Forms.Padding(4);
             this.removeInstructionButton.Name = "removeInstructionButton";
             this.removeInstructionButton.Size = new System.Drawing.Size(255, 79);
             this.removeInstructionButton.TabIndex = 13;
@@ -767,22 +769,22 @@
             this.removeInstructionButton.UseVisualStyleBackColor = true;
             this.removeInstructionButton.Click += new System.EventHandler(this.removeInstructionButton_Click);
             // 
-            // textBox1
+            // hexadecimalTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(659, 107);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(305, 325);
-            this.textBox1.TabIndex = 12;
+            this.hexadecimalTextBox.Location = new System.Drawing.Point(659, 107);
+            this.hexadecimalTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.hexadecimalTextBox.Multiline = true;
+            this.hexadecimalTextBox.Name = "hexadecimalTextBox";
+            this.hexadecimalTextBox.ReadOnly = true;
+            this.hexadecimalTextBox.Size = new System.Drawing.Size(305, 325);
+            this.hexadecimalTextBox.TabIndex = 12;
             // 
             // instructionListListBox
             // 
             this.instructionListListBox.FormattingEnabled = true;
             this.instructionListListBox.ItemHeight = 16;
             this.instructionListListBox.Location = new System.Drawing.Point(81, 108);
-            this.instructionListListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.instructionListListBox.Margin = new System.Windows.Forms.Padding(4);
             this.instructionListListBox.Name = "instructionListListBox";
             this.instructionListListBox.Size = new System.Drawing.Size(305, 324);
             this.instructionListListBox.TabIndex = 11;
@@ -791,7 +793,7 @@
             // 
             this.hexCodeLabel.AutoSize = true;
             this.hexCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hexCodeLabel.Location = new System.Drawing.Point(749, 89);
+            this.hexCodeLabel.Location = new System.Drawing.Point(738, 88);
             this.hexCodeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.hexCodeLabel.Name = "hexCodeLabel";
             this.hexCodeLabel.Size = new System.Drawing.Size(141, 17);
@@ -812,7 +814,7 @@
             // addInstructionButton
             // 
             this.addInstructionButton.Location = new System.Drawing.Point(396, 81);
-            this.addInstructionButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.addInstructionButton.Margin = new System.Windows.Forms.Padding(4);
             this.addInstructionButton.Name = "addInstructionButton";
             this.addInstructionButton.Size = new System.Drawing.Size(255, 79);
             this.addInstructionButton.TabIndex = 8;
@@ -868,7 +870,7 @@
             // 
             this.operandNumericUpDown.Hexadecimal = true;
             this.operandNumericUpDown.Location = new System.Drawing.Point(689, 43);
-            this.operandNumericUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.operandNumericUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.operandNumericUpDown.Maximum = new decimal(new int[] {
             13,
             0,
@@ -882,7 +884,7 @@
             // 
             this.Register1NumericUpDown.Hexadecimal = true;
             this.Register1NumericUpDown.Location = new System.Drawing.Point(521, 43);
-            this.Register1NumericUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Register1NumericUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.Register1NumericUpDown.Maximum = new decimal(new int[] {
             13,
             0,
@@ -901,7 +903,7 @@
             "Immediate",
             "Memory"});
             this.operandTypeComboBox.Location = new System.Drawing.Point(352, 42);
-            this.operandTypeComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.operandTypeComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.operandTypeComboBox.Name = "operandTypeComboBox";
             this.operandTypeComboBox.Size = new System.Drawing.Size(160, 24);
             this.operandTypeComboBox.TabIndex = 1;
@@ -932,7 +934,7 @@
             "LSL",
             "MULT"});
             this.instructionComboBox.Location = new System.Drawing.Point(183, 42);
-            this.instructionComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.instructionComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.instructionComboBox.Name = "instructionComboBox";
             this.instructionComboBox.Size = new System.Drawing.Size(160, 24);
             this.instructionComboBox.TabIndex = 0;
@@ -946,7 +948,7 @@
             this.Controls.Add(this.switchModeButton);
             this.Controls.Add(this.encoderPanel);
             this.Controls.Add(this.decoderPanel);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ISADecoder";
@@ -1026,7 +1028,7 @@
         private System.Windows.Forms.Label instructionLabel;
         private System.Windows.Forms.Button addInstructionButton;
         private System.Windows.Forms.ListBox instructionListListBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox hexadecimalTextBox;
         private System.Windows.Forms.Button saveCodeButton;
         private System.Windows.Forms.Button translateInstructionsButton;
         private System.Windows.Forms.Button removeInstructionButton;
