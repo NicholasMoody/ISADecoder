@@ -589,7 +589,7 @@ namespace ISADecoder {
                 }
                 else if (operandTypeComboBox.Text == "Immediate")
                 {
-                    instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", " + Convert.ToInt32(operandNumericUpDown.Value).ToString());
+                    instructionListListBox.Items.Add(instruction + " R" + Convert.ToInt32(Register1NumericUpDown.Value).ToString("x") + ", " + Convert.ToInt32(operandNumericUpDown.Value).ToString("X4"));
                     return;
                 }
                 else if (operandTypeComboBox.Text == "Memory")
