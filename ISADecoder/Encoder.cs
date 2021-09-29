@@ -318,6 +318,8 @@ namespace ISADecoder
                 case 0b00100:
                     if(operandType == 0b000)
                         bitCount = 16;
+                    else if(operandType == 0b001)
+                        bitCount = 40;
                     else
                         bitCount = 32;
                     break;
@@ -325,6 +327,11 @@ namespace ISADecoder
                 default:
                     break;
             }
+
+            //Bool to identify if a 40-bit instruction is being used; make adjustment for 40 bit instruction
+            bool instr40bit = false;
+            if (bitCount == 40)
+                instr40bit = true;
 
             //Bit mask for conversions
             uint bitmask = 0b11110000000000000000000000000000;
@@ -346,10 +353,16 @@ namespace ISADecoder
                 instruction += BinNibbleToHex(byteToConvert);
                 nibblesConverted += 1;
 
-                if (shiftDist >= 0 && i+4 != bitCount && nibblesConverted == 2)
+                if(instr40bit && nibblesConverted == 3)
+                {
+                    instruction += "0 0";
+                    instr40bit = false;     //set false as adjustment has been made
+                    i += 8;                 //Adjust i placement due to empty byte being added
+                }
+
+                if (shiftDist >= 0 && i+4 != bitCount && (nibblesConverted %2) == 0)
                 {
                     instruction += " ";
-                    nibblesConverted = 0;
                 }
             }
 

@@ -536,18 +536,21 @@ namespace ISADecoder {
             if (operandTypeComboBox.Text == "Register")
             {
                 operandLabel.Text = "Register 2";
-                operandNumericUpDown.Maximum = 0xD;
+                operandNumericUpDown.Hexadecimal = true;
+                operandNumericUpDown.Maximum = 0xA;
                 operandNumericUpDown.Minimum = 0;
             }
             else if (operandTypeComboBox.Text == "Immediate")
             {
                 operandLabel.Text = "Immediate Value";
+                operandNumericUpDown.Hexadecimal = false;
                 operandNumericUpDown.Maximum = 0xFFFF;
                 operandNumericUpDown.Minimum = 0;
             }
             if (operandTypeComboBox.Text == "Memory")
             {
                 operandLabel.Text = "Memory Address";
+                operandNumericUpDown.Hexadecimal = true;
                 operandNumericUpDown.Maximum = 0xFFFFF;
                 operandNumericUpDown.Minimum = 0;
             }

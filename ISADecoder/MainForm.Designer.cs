@@ -644,10 +644,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(380, 318);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+
+            this.button1.Location = new System.Drawing.Point(507, 391);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(155, 43);
+            this.button1.Size = new System.Drawing.Size(207, 53);
             this.button1.TabIndex = 56;
             this.button1.Text = "Open Binary File";
             this.button1.UseVisualStyleBackColor = true;
@@ -819,7 +819,7 @@
             this.operandNumericUpDown.Hexadecimal = true;
             this.operandNumericUpDown.Location = new System.Drawing.Point(517, 35);
             this.operandNumericUpDown.Maximum = new decimal(new int[] {
-            13,
+            10,
             0,
             0,
             0});
@@ -832,7 +832,7 @@
             this.Register1NumericUpDown.Hexadecimal = true;
             this.Register1NumericUpDown.Location = new System.Drawing.Point(391, 35);
             this.Register1NumericUpDown.Maximum = new decimal(new int[] {
-            13,
+            10,
             0,
             0,
             0});
@@ -890,10 +890,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 428);
             this.Controls.Add(this.switchModeButton);
-            this.Controls.Add(this.decoderPanel);
             this.Controls.Add(this.encoderPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Controls.Add(this.decoderPanel);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ISADecoder";
