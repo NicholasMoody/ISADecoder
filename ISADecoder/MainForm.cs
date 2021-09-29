@@ -486,6 +486,7 @@ namespace ISADecoder {
                     operandTypeComboBox.Items.Clear();
                     operandTypeComboBox.Items.Add("Memory");
                     operandTypeComboBox.SelectedItem = "Memory";
+                    operandNumericUpDown.Maximum = 0xFFFF;
                     operandTypeComboBox.Enabled = false;
                     operandNumericUpDown.Enabled = true;
                     operandTypeLabel.Visible = true;
