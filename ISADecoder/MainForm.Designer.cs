@@ -74,9 +74,9 @@
             this.btnRunToEnd = new System.Windows.Forms.Button();
             this.switchModeButton = new System.Windows.Forms.Button();
             this.decoderPanel = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.encoderPanel = new System.Windows.Forms.Panel();
             this.saveCodeButton = new System.Windows.Forms.Button();
             this.translateInstructionsButton = new System.Windows.Forms.Button();
@@ -691,6 +691,16 @@
             this.decoderPanel.Size = new System.Drawing.Size(1043, 512);
             this.decoderPanel.TabIndex = 57;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(507, 391);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(207, 53);
+            this.button1.TabIndex = 56;
+            this.button1.Text = "Open Binary File";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -712,16 +722,6 @@
             this.label21.Size = new System.Drawing.Size(67, 17);
             this.label21.TabIndex = 56;
             this.label21.Text = "Address";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(507, 391);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(207, 53);
-            this.button1.TabIndex = 56;
-            this.button1.Text = "Open Binary File";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // encoderPanel
             // 
@@ -884,7 +884,7 @@
             this.operandNumericUpDown.Location = new System.Drawing.Point(689, 43);
             this.operandNumericUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.operandNumericUpDown.Maximum = new decimal(new int[] {
-            13,
+            10,
             0,
             0,
             0});
@@ -898,7 +898,7 @@
             this.Register1NumericUpDown.Location = new System.Drawing.Point(521, 43);
             this.Register1NumericUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.Register1NumericUpDown.Maximum = new decimal(new int[] {
-            13,
+            10,
             0,
             0,
             0});
@@ -958,8 +958,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 527);
             this.Controls.Add(this.switchModeButton);
-            this.Controls.Add(this.decoderPanel);
             this.Controls.Add(this.encoderPanel);
+            this.Controls.Add(this.decoderPanel);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
