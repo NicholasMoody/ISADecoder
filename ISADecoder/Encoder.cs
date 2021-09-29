@@ -296,6 +296,8 @@ namespace ISADecoder
                 //Load and Store Instructions
                 case 0b00001:
                 case 0b00010:
+                    bitCount = 40;
+                    break;
                 //Branching Instructions
                 case 0b00101:
                 case 0b00110:
