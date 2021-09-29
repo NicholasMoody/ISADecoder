@@ -108,6 +108,7 @@ namespace ISADecoder {
             tbMemViewer.Text = "";
             tbMemSelection.Text = "";
             lblStats.Text = "";
+            btnRun.Enabled = true;
 
             short pc = 0; 
 
@@ -127,10 +128,12 @@ namespace ISADecoder {
             catch (ArgumentOutOfRangeException) {
                 MessageBox.Show("Program must end with the STOP instruction (0x0000).", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnRun.Enabled = false;
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnRun.Enabled = false;
             }
         }
 
@@ -314,7 +317,7 @@ namespace ISADecoder {
         // I AM WARNING YOU 
         private void ViewMemoryAt(int address) {
             tbMemViewer.Text = "";
-            tbMemSelection.Text = $"0x{address:X5}";
+            tbMemSelection.Text = $"{address:X5}";
             for (short i = -12; i <= 12; i += 2) {
                 if (address + i >= 0 && address + i < memory.Length) {
                     tbMemViewer.Text += ToHexStringMemAddr(address + i) + " | " + ToHexFromMemory(address + i) + Environment.NewLine;
@@ -398,8 +401,9 @@ namespace ISADecoder {
                 lbOutput.SelectedIndex = 0;
                 lbOutput.Enabled = true;
                 btnStep.Enabled = false;
-                btnRun.Enabled = true;
+                btnRun.Enabled = false;
                 btnDecode.Enabled = true;
+                btnRunToEnd.Enabled = false;
                 registers[PCreg].Text = "0x0000"; // reset PC 
             }
             else if (lbOutput.SelectedIndex < lbOutput.Items.Count - 1) {
@@ -438,7 +442,7 @@ namespace ISADecoder {
             lbOutput.SelectedIndex = 0;
             lbOutput.Enabled = true;
             btnStep.Enabled = false;
-            btnRun.Enabled = true;
+            btnRun.Enabled = false;
             btnDecode.Enabled = true;
             registers[PCreg].Text = "0x0000"; // reset PC 
             btnRunToEnd.Enabled = false;
